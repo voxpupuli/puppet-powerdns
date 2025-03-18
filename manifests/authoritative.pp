@@ -11,17 +11,17 @@ class powerdns::authoritative inherits powerdns {
   include "powerdns::backends::${powerdns::backend}"
 
   file { $powerdns::authoritative_config:
-    ensure => 'file',
-    owner  => 'root',
-    group  => $powerdns::authoritative_group,
-    mode   => '0640',
-    before => Service['pdns'],
+    ensure  => 'file',
+    owner   => 'root',
+    group   => $powerdns::authoritative_group,
+    mode    => '0640',
+    require => Package[$powerdns::authoritative_package_name],
   }
 
   service { 'pdns':
     ensure  => running,
     name    => $powerdns::authoritative_service_name,
     enable  => true,
-    require => Package[$powerdns::authoritative_package_name],
+    require => File[$powerdns::authoritative_config],
   }
 }
