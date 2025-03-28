@@ -27,6 +27,9 @@ describe 'powerdns', type: :class do
           sqlite_binary_package_name = 'sqlite'
           recursor_package_name = 'pdns-recursor'
           recursor_service_name = 'pdns-recursor'
+          config_file_owner = 'root'
+          config_file_group = 'root'
+          config_file_mode = '644'
         when 'Debian'
           authoritative_package_name = 'pdns-server'
           authoritative_service_name = 'pdns'
@@ -39,6 +42,9 @@ describe 'powerdns', type: :class do
           sqlite_binary_package_name = 'sqlite3'
           recursor_package_name = 'pdns-recursor'
           recursor_service_name = 'pdns-recursor'
+          config_file_owner = 'root'
+          config_file_group = 'root'
+          config_file_mode = '644'
         when 'Archlinux'
           authoritative_package_name = 'powerdns'
           authoritative_service_name = 'pdns'
@@ -49,6 +55,9 @@ describe 'powerdns', type: :class do
           recursor_package_name = 'powerdns-recursor'
           recursor_service_name = 'pdns-recursor'
           recursor_dir = '/etc/powerdns'
+          config_file_owner = 'root'
+          config_file_group = 'root'
+          config_file_mode = '644'
         end
 
         context 'powerdns class without parameters' do

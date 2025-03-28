@@ -37,13 +37,22 @@ define powerdns::config (
     $notify_service  = 'pdns-recursor'
   }
 
+  file { "powerdns-config-file-${path}":
+    ensure            => $ensure,
+    path              => $path,
+    owner             => $powerdns::config_file_owner
+    group              => $powerdns_config_file_group
+    mode              => $powerdns_config_file_mode
+    require           => Package[$require_package],
+  }
+
   file_line { "powerdns-config-${setting}-${path}":
     ensure            => $ensure,
     path              => $path,
     line              => $line,
     match             => "^${setting}=",
     match_for_absence => true, # ignored when ensure == 'present'
-    require           => Package[$require_package],
+    require           => [File["powerdns-config-file-${path}"], Package[$require_package]],
     notify            => Service[$notify_service],
   }
 }

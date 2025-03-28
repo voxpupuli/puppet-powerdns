@@ -71,6 +71,9 @@ class powerdns (
   Powerdns::Autoprimaries $autoprimaries = {},
   Boolean $purge_autoprimaries = false,
   Optional[String[1]] $authoritative_group = undef,
+  Optional[String] $config_file_owner = 'root',
+  Optional[String] $config_file_group = 'root',
+  Optional[String] $config_file_mode = '644',
 ) {
   # Do some additional checks. In certain cases, some parameters are no longer optional.
   if $authoritative {
