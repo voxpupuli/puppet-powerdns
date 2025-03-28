@@ -40,9 +40,9 @@ define powerdns::config (
   file { "powerdns-config-file-${path}":
     ensure            => $ensure,
     path              => $path,
-    owner             => $powerdns::config_file_owner
-    group              => $powerdns_config_file_group
-    mode              => $powerdns_config_file_mode
+    owner             => $powerdns::config_file_owner,
+    group             => $powerdns_config_file_group,
+    mode              => $powerdns_config_file_mode,
     require           => Package[$require_package],
   }
 
