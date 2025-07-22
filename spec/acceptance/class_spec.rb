@@ -13,28 +13,25 @@ end
 
 describe 'powerdns class' do
   context 'authoritative server' do
-    # Using puppet_apply as a helper
-    it 'works idempotently with no errors' do
-      pp = <<-PUPPET
-      class { 'powerdns':
-        db_password => 's0m4r4nd0mp4ssw0rd',
-        db_root_password => 'v3rys3c4r3',
-      }
+    let(:manifest) do
+      <<~PUPPET
+        class { 'powerdns':
+          db_password => 's0m4r4nd0mp4ssw0rd',
+          db_root_password => 'v3rys3c4r3',
+        }
 
-      # This makes sure the second test can run successfully
-      # on Debian-based systems. Debian has the odd tendency
-      # to start services before they are configured.
-      powerdns::config { 'authoritative-local-port':
-        type => 'authoritative',
-        setting => 'local-port',
-        value => 54,
-      }
+        # This makes sure the second test can run successfully
+        # on Debian-based systems. Debian has the odd tendency
+        # to start services before they are configured.
+        powerdns::config { 'authoritative-local-port':
+          type => 'authoritative',
+          setting => 'local-port',
+          value => 54,
+        }
       PUPPET
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
     end
+
+    it_behaves_like 'an idempotent resource'
 
     describe file(authoritative_config) do
       it { is_expected.to be_file }
@@ -51,17 +48,15 @@ describe 'powerdns class' do
   end
 
   context 'recursor server' do
-    it 'works idempotently with no errors' do
-      pp = <<-PUPPET
-      class { 'powerdns':
-        authoritative => false,
-        recursor => true,
-      }
-      PUPPET
-
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<~PUPPET
+          class { 'powerdns':
+            authoritative => false,
+            recursor => true,
+          }
+        PUPPET
+      end
     end
   end
 end
