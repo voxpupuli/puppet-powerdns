@@ -46,6 +46,7 @@ class powerdns::backends::sqlite (
     }
     -> exec { 'powerdns-sqlite3-create-tables':
       command => "/usr/bin/env sqlite3 ${powerdns::db_file} < ${powerdns::sqlite_schema_file}",
+      user    => 'pdns',
       unless  => "/usr/bin/env test `echo '.tables domains' | sqlite3 ${powerdns::db_file} | wc -l` -eq 1",
       before  => Service['pdns'],
       require => Package[$powerdns::authoritative_package_name],
