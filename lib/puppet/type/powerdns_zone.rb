@@ -55,7 +55,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'ttl for SOA record'
     defaultto '3600'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_ttl needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -63,7 +63,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'zone class for SOA record'
     defaultto 'IN'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_class needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -71,7 +71,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'primary master name server for the zone for SOA record'
     defaultto 'a.powerdns.server'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_mname needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -79,7 +79,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'Email address of the administrator responsible for this zone for SOA record'
     defaultto 'hostmaster'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_rname needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -87,7 +87,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'Number of seconds after which secondary name servers should query the master for the SOA record, to detect zone changes'
     defaultto '10800'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_refresh needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -95,7 +95,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'Number of seconds after which secondary name servers should retry to request the serial number from the master if the master does not respond'
     defaultto '3600'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_retry needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -103,7 +103,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'Number of seconds after which secondary name servers should stop answering request for this zone if the master does not respond.'
     defaultto '604800'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_expire needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -111,7 +111,7 @@ Puppet::Type.newtype(:powerdns_zone) do
     desc 'Minimum ttl in seconds, negativ response caching ttl'
     defaultto '3600'
     validate do |value|
-      raise ArgumentError, 'config_dir needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'soa_minttl needs to be a string' unless value.is_a?(String)
     end
   end
 
