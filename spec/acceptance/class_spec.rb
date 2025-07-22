@@ -45,6 +45,15 @@ describe 'powerdns class' do
     describe command('/usr/bin/pdns_control version') do
       its(:stdout) { is_expected.to match %r{^4\.9} }
     end
+
+    context 'when removing pdns.conf in between' do
+      it 'recreates the file' do
+        apply_manifest(manifest, catch_failures: true)
+        on default, "rm -f #{authoritative_config}"
+        apply_manifest(manifest, expect_changes: true)
+        apply_manifest(manifest, catch_changes: true)
+      end
+    end
   end
 
   context 'recursor server' do
