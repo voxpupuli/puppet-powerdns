@@ -10,6 +10,13 @@ class powerdns::recursor (
     ensure => $powerdns::recursor_package_ensure,
   }
 
+  file { $powerdns::recursor_config:
+    ensure  => file,
+    owner   => 'root',
+    group   => 0,
+    require => Package[$powerdns::recursor_package_name],
+  }
+
   if !empty($forward_zones) {
     $zone_config = "${powerdns::recursor_configdir}/forward_zones.conf"
     file { $zone_config:
