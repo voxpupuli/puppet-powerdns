@@ -1,518 +1,524 @@
 # Changelog
 
-## v5.2.0 - 2025-02-17
+All notable changes to this project will be documented in this file.
+Each new release typically also includes the latest modulesync defaults.
+These should not affect the functionality of the module.
 
-### What's Changed
+## [v6.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v6.0.0) (2025-07-24)
 
-* PostgreSQL backend: make powerdns a database owner by @nixargh in https://github.com/sensson/puppet-powerdns/pull/173
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v5.2.1...v6.0.0)
 
-### New Contributors
+**Breaking changes:**
 
-* @nixargh made their first contribution in https://github.com/sensson/puppet-powerdns/pull/173
+- drop archlinux from supported OS, as mysql module isn't supporting it [\#208](https://github.com/voxpupuli/puppet-powerdns/pull/208) ([saz](https://github.com/saz))
+- remove EOL Ubuntu 18.04 and Debian 10 [\#192](https://github.com/voxpupuli/puppet-powerdns/pull/192) ([saz](https://github.com/saz))
+- remove EOL CentOS 8 [\#190](https://github.com/voxpupuli/puppet-powerdns/pull/190) ([saz](https://github.com/saz))
+- remove code related to EOL Debian/Ubuntu releases [\#183](https://github.com/voxpupuli/puppet-powerdns/pull/183) ([saz](https://github.com/saz))
+- Remove eol oraclelinux [\#182](https://github.com/voxpupuli/puppet-powerdns/pull/182) ([saz](https://github.com/saz))
+- Remove eol centos [\#180](https://github.com/voxpupuli/puppet-powerdns/pull/180) ([saz](https://github.com/saz))
+- Remove eol redhat [\#179](https://github.com/voxpupuli/puppet-powerdns/pull/179) ([saz](https://github.com/saz))
+- drop EOL Scientific as supported OS [\#177](https://github.com/voxpupuli/puppet-powerdns/pull/177) ([saz](https://github.com/saz))
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v5.1.0...v5.2.0
+**Implemented enhancements:**
 
-## v5.1.0 - 2025-02-13
+- Allow puppetlabs/apt 10.x [\#205](https://github.com/voxpupuli/puppet-powerdns/pull/205) ([smortex](https://github.com/smortex))
+- metadata.json: Add OpenVox [\#200](https://github.com/voxpupuli/puppet-powerdns/pull/200) ([jstraw](https://github.com/jstraw))
+- allow puppetlabs/mysql 16.X [\#197](https://github.com/voxpupuli/puppet-powerdns/pull/197) ([saz](https://github.com/saz))
+- update recursor version to 5.0, authoritative version to 4.9 [\#195](https://github.com/voxpupuli/puppet-powerdns/pull/195) ([saz](https://github.com/saz))
+- replace params.pp with hiera data [\#184](https://github.com/voxpupuli/puppet-powerdns/pull/184) ([saz](https://github.com/saz))
+- add RedHat/CentOS/OracleLinux 8/9 and Debian 11/12 as supported OS [\#178](https://github.com/voxpupuli/puppet-powerdns/pull/178) ([saz](https://github.com/saz))
 
-### What's Changed
+**Fixed bugs:**
 
-* Update forward_zones.conf.erb to remove .sort by @akremer in https://github.com/sensson/puppet-powerdns/pull/170
-* Add lmdb backend option by @Heidistein in https://github.com/sensson/puppet-powerdns/pull/174
+- replace hard-coded pdns group, fixes \#202 [\#209](https://github.com/voxpupuli/puppet-powerdns/pull/209) ([saz](https://github.com/saz))
+- fix: parameter type error messages [\#201](https://github.com/voxpupuli/puppet-powerdns/pull/201) ([pdemonaco](https://github.com/pdemonaco))
+- require package before trying to manage config file [\#198](https://github.com/voxpupuli/puppet-powerdns/pull/198) ([saz](https://github.com/saz))
+- set "undef" as default value for backend packages [\#196](https://github.com/voxpupuli/puppet-powerdns/pull/196) ([saz](https://github.com/saz))
+- fix schema file paths on RedHat based OS [\#194](https://github.com/voxpupuli/puppet-powerdns/pull/194) ([saz](https://github.com/saz))
+- remove unused powertools yum repo [\#191](https://github.com/voxpupuli/puppet-powerdns/pull/191) ([saz](https://github.com/saz))
+- correct pdns.conf permissions on Redhat derivatives [\#185](https://github.com/voxpupuli/puppet-powerdns/pull/185) ([pdemonaco](https://github.com/pdemonaco))
+- pin recursor apt source with higher priority [\#176](https://github.com/voxpupuli/puppet-powerdns/pull/176) ([saz](https://github.com/saz))
 
-### New Contributors
+**Closed issues:**
 
-* @akremer made their first contribution in https://github.com/sensson/puppet-powerdns/pull/170
-* @Heidistein made their first contribution in https://github.com/sensson/puppet-powerdns/pull/174
+- sqlite3 backend exec should be run as user `pdns` [\#211](https://github.com/voxpupuli/puppet-powerdns/issues/211)
+- If pdns.conf missing or removed, it isn't re-created [\#202](https://github.com/voxpupuli/puppet-powerdns/issues/202)
+- Ensure correct `LICENSE`. [\#188](https://github.com/voxpupuli/puppet-powerdns/issues/188)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v5.0.0...v5.1.0
+**Merged pull requests:**
 
-## v5.0.0 - 2024-02-20
+- modulesync 10.0.0 [\#213](https://github.com/voxpupuli/puppet-powerdns/pull/213) ([saz](https://github.com/saz))
+- run sqlite backend table creation as user pdns, fixes \#211 [\#212](https://github.com/voxpupuli/puppet-powerdns/pull/212) ([saz](https://github.com/saz))
 
-Version 4.1.0 included #163, which a backwards incompatible change. This release is to be on par with semver.
+## [v5.2.1](https://github.com/voxpupuli/puppet-powerdns/tree/v5.2.1) (2025-03-05)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v4.1.1...v5.0.0
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v5.2.0...v5.2.1)
 
-## v4.1.1 - 2024-02-15
+**Fixed bugs:**
 
-### What's Changed
+- fix regex to get repo version [\#175](https://github.com/voxpupuli/puppet-powerdns/pull/175) ([saz](https://github.com/saz))
 
-* Allow postgresql 10 module by @deric in https://github.com/sensson/puppet-powerdns/pull/164
-* Puppet 8 support by @deric in https://github.com/sensson/puppet-powerdns/pull/166
-* Pdk update & remove .ruby-version file by @deric in https://github.com/sensson/puppet-powerdns/pull/165
+## [v5.2.0](https://github.com/voxpupuli/puppet-powerdns/tree/v5.2.0) (2025-02-17)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v4.1.0...v4.1.1
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v5.1.0...v5.2.0)
 
-## v4.1.0 - 2024-02-06
+**Merged pull requests:**
 
-### What's Changed
+- PostgreSQL backend: make powerdns a database owner [\#173](https://github.com/voxpupuli/puppet-powerdns/pull/173) ([nixargh](https://github.com/nixargh))
 
-* add type/provider for autoprimary by @trefzer in https://github.com/sensson/puppet-powerdns/pull/162
-* Add the ability to install pdns and recursor with differents versions by @mouchymouchy in https://github.com/sensson/puppet-powerdns/pull/163
+## [v5.1.0](https://github.com/voxpupuli/puppet-powerdns/tree/v5.1.0) (2025-02-13)
 
-### New Contributors
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v5.0.0...v5.1.0)
 
-* @mouchymouchy made their first contribution in https://github.com/sensson/puppet-powerdns/pull/163
+**Closed issues:**
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v4.0.1...v4.1.0
+- \[Bug\] Improper sorting of forward\_zones causes broken forwarding configuration [\#168](https://github.com/voxpupuli/puppet-powerdns/issues/168)
+- Powerdns config file [\#167](https://github.com/voxpupuli/puppet-powerdns/issues/167)
 
-## v4.0.1 - 2023-09-07
+**Merged pull requests:**
 
-### What's Changed
+- Add lmdb backend option [\#174](https://github.com/voxpupuli/puppet-powerdns/pull/174) ([Heidistein](https://github.com/Heidistein))
+- Update forward\_zones.conf.erb to remove .sort [\#170](https://github.com/voxpupuli/puppet-powerdns/pull/170) ([akremer](https://github.com/akremer))
 
-- Bugfix: fix deprecated use of postgresql_password() by @sircubbi in https://github.com/sensson/puppet-powerdns/pull/161
+## [v5.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v5.0.0) (2024-02-15)
 
-### New Contributors
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v4.1.1...v5.0.0)
 
-- @sircubbi made their first contribution in https://github.com/sensson/puppet-powerdns/pull/161
+## [v4.1.1](https://github.com/voxpupuli/puppet-powerdns/tree/v4.1.1) (2024-02-15)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v4.0.0...v4.0.1
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v4.1.0...v4.1.1)
 
-## v4.0.0 - 2023-08-24
+**Merged pull requests:**
 
-### What's Changed
+- Puppet 8 support [\#166](https://github.com/voxpupuli/puppet-powerdns/pull/166) ([deric](https://github.com/deric))
+- Pdk update & remove .ruby-version file [\#165](https://github.com/voxpupuli/puppet-powerdns/pull/165) ([deric](https://github.com/deric))
+- Allow postgresql 10 module [\#164](https://github.com/voxpupuli/puppet-powerdns/pull/164) ([deric](https://github.com/deric))
 
-This version drops support for EOL operating systems and Ruby 2.6.
+## [v4.1.0](https://github.com/voxpupuli/puppet-powerdns/tree/v4.1.0) (2024-02-06)
 
-- Drop EoL module support  by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/156
-- pdk: Update 2.5.0->3.0.0 by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/154
-- puppetlabs/postgresql: Require 9.x by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/157
-- puppetlabs/stdlib: Require 9.x  by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/152
-- puppetlabs/mysql: Allow 15.x by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/153
-- .fixtures.yml: Migrate to git by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/151
-- puppet-strings: autofix by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/155
-- puppet/epel: Allow 5.x by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/158
-- Add Arch Linux support by @bastelfreak in https://github.com/sensson/puppet-powerdns/pull/159
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v4.0.1...v4.1.0)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v3.0.3...v4.0.0
+**Merged pull requests:**
 
-## v3.0.3 - 2023-05-27
+- Add the ability to install pdns and recursor with differents versions [\#163](https://github.com/voxpupuli/puppet-powerdns/pull/163) ([mouchymouchy](https://github.com/mouchymouchy))
+- add type/provider for autoprimary [\#162](https://github.com/voxpupuli/puppet-powerdns/pull/162) ([trefzer](https://github.com/trefzer))
 
-### What's Changed
+## [v4.0.1](https://github.com/voxpupuli/puppet-powerdns/tree/v4.0.1) (2023-09-07)
 
-- Allow newer dependencies by @saz in https://github.com/sensson/puppet-powerdns/pull/150
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v4.0.0...v4.0.1)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v3.0.2...v3.0.3
+**Merged pull requests:**
 
-## v3.0.2 - 2023-04-01
+- Bugfix: fix deprecated use of postgresql\_password\(\) [\#161](https://github.com/voxpupuli/puppet-powerdns/pull/161) ([sircubbi](https://github.com/sircubbi))
 
-### What's Changed
+## [v4.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v4.0.0) (2023-08-22)
 
-- chore: update metadata & readme for puppet 7 by @ju5t in https://github.com/sensson/puppet-powerdns/pull/149
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v3.0.3...v4.0.0)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v3.0.1...v3.0.2
+**Merged pull requests:**
 
-## v3.0.1 - 2023-04-01
+- Add Arch Linux support [\#159](https://github.com/voxpupuli/puppet-powerdns/pull/159) ([bastelfreak](https://github.com/bastelfreak))
+- puppet/epel: Allow 5.x [\#158](https://github.com/voxpupuli/puppet-powerdns/pull/158) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/postgresql: Require 9.x [\#157](https://github.com/voxpupuli/puppet-powerdns/pull/157) ([bastelfreak](https://github.com/bastelfreak))
+- Drop EoL module support  [\#156](https://github.com/voxpupuli/puppet-powerdns/pull/156) ([bastelfreak](https://github.com/bastelfreak))
+- puppet-strings: autofix [\#155](https://github.com/voxpupuli/puppet-powerdns/pull/155) ([bastelfreak](https://github.com/bastelfreak))
+- pdk: Update 2.5.0-\>3.0.0 [\#154](https://github.com/voxpupuli/puppet-powerdns/pull/154) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/mysql: Allow 15.x [\#153](https://github.com/voxpupuli/puppet-powerdns/pull/153) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Require 9.x  [\#152](https://github.com/voxpupuli/puppet-powerdns/pull/152) ([bastelfreak](https://github.com/bastelfreak))
+- .fixtures.yml: Migrate to git [\#151](https://github.com/voxpupuli/puppet-powerdns/pull/151) ([bastelfreak](https://github.com/bastelfreak))
 
-This release ensures the changelog is updated at Puppet Forge.
+## [v3.0.3](https://github.com/voxpupuli/puppet-powerdns/tree/v3.0.3) (2023-05-27)
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v3.0.0...v3.0.1
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v3.0.2...v3.0.3)
 
-## v3.0.0 - 2023-03-31
+**Closed issues:**
 
-### What's Changed
+- Install PowerDNS version 4.7.x [\#145](https://github.com/voxpupuli/puppet-powerdns/issues/145)
 
-- Support Sensitive strings by @deric in https://github.com/sensson/puppet-powerdns/pull/148
-- BREAKING: drop Puppet 6 support as this version is EOL since 28-02-2023.
+**Merged pull requests:**
 
-**Full Changelog**: https://github.com/sensson/puppet-powerdns/compare/v2.3.0...v3.0.0
+- Allow newer dependencies [\#150](https://github.com/voxpupuli/puppet-powerdns/pull/150) ([saz](https://github.com/saz))
 
-## 2.3.0 and onwards
+## [v3.0.2](https://github.com/voxpupuli/puppet-powerdns/tree/v3.0.2) (2023-04-01)
 
-Our changelog will be published on our [releases page](https://github.com/sensson/puppet-powerdns/releases).
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v3.0.1...v3.0.2)
 
-## 2.2.2
+**Merged pull requests:**
 
-Bumps PostgreSQL requirement.
+- chore: update metadata & readme for puppet 7 [\#149](https://github.com/voxpupuli/puppet-powerdns/pull/149) ([ju5t](https://github.com/ju5t))
 
-## 2.2.1
+## [v3.0.1](https://github.com/voxpupuli/puppet-powerdns/tree/v3.0.1) (2023-04-01)
 
-Incorrect tag.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v3.0.0...v3.0.1)
 
-## 2.2.0
+## [v3.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v3.0.0) (2023-03-31)
 
-This release adds support for PowerDNS resources.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v2.3.0...v3.0.0)
 
-### Features
+**Merged pull requests:**
 
-- Add support for PowerDNS resources.
-- Support Rocky Linux
-- Support PowerDNS 4.6
+- Support Sensitive strings [\#148](https://github.com/voxpupuli/puppet-powerdns/pull/148) ([deric](https://github.com/deric))
 
-## 2.1.4
+## [v2.3.0](https://github.com/voxpupuli/puppet-powerdns/tree/v2.3.0) (2023-02-27)
 
-This release adds package_ensure to all backends.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v2.2.2...v2.3.0)
 
-## 2.1.3
+**Closed issues:**
 
-This release updates the dependencies and adds support
-for PowerDNS 4.5.
+- puppet type throws error while running "puppet generate types" [\#129](https://github.com/voxpupuli/puppet-powerdns/issues/129)
+- Remove .git folder from puppetforge [\#127](https://github.com/voxpupuli/puppet-powerdns/issues/127)
+- collate/charset for db creation [\#126](https://github.com/voxpupuli/puppet-powerdns/issues/126)
 
-### Features
+**Merged pull requests:**
 
-- Add support for PowerDNS 4.5.
+- mysql::db sql parameter changed to array [\#144](https://github.com/voxpupuli/puppet-powerdns/pull/144) ([skn-bvdh](https://github.com/skn-bvdh))
+- allow \(minor\) versions above 9 for schema import [\#143](https://github.com/voxpupuli/puppet-powerdns/pull/143) ([trefzer](https://github.com/trefzer))
+- make gpgsql-password optional [\#142](https://github.com/voxpupuli/puppet-powerdns/pull/142) ([bastelfreak](https://github.com/bastelfreak))
+- Drop unneeded service\_provider name [\#141](https://github.com/voxpupuli/puppet-powerdns/pull/141) ([bastelfreak](https://github.com/bastelfreak))
+- rubocop: Fix Style/RegexpLiteral [\#140](https://github.com/voxpupuli/puppet-powerdns/pull/140) ([bastelfreak](https://github.com/bastelfreak))
+- init.pp: fix broken optional variables [\#139](https://github.com/voxpupuli/puppet-powerdns/pull/139) ([bastelfreak](https://github.com/bastelfreak))
+- backend\_install: default to true in init.pp [\#138](https://github.com/voxpupuli/puppet-powerdns/pull/138) ([bastelfreak](https://github.com/bastelfreak))
+- move static data from params.pp to init.pp [\#137](https://github.com/voxpupuli/puppet-powerdns/pull/137) ([bastelfreak](https://github.com/bastelfreak))
+- Support configuration of multiple forward zones [\#135](https://github.com/voxpupuli/puppet-powerdns/pull/135) ([deric](https://github.com/deric))
+- Convert to pdk [\#133](https://github.com/voxpupuli/puppet-powerdns/pull/133) ([deric](https://github.com/deric))
+- Support 4.7 release [\#132](https://github.com/voxpupuli/puppet-powerdns/pull/132) ([deric](https://github.com/deric))
+- Allow passing boolean [\#131](https://github.com/voxpupuli/puppet-powerdns/pull/131) ([deric](https://github.com/deric))
+- allow using puppet generate types [\#130](https://github.com/voxpupuli/puppet-powerdns/pull/130) ([maxadamo](https://github.com/maxadamo))
+- Ignore .git for pdk build [\#128](https://github.com/voxpupuli/puppet-powerdns/pull/128) ([promasu](https://github.com/promasu))
 
-## 2.1.2
+## [v2.2.2](https://github.com/voxpupuli/puppet-powerdns/tree/v2.2.2) (2022-07-12)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v2.2.1...v2.2.2)
 
-A number of dependency version bumps and a fix for the
-sqlite schema on RHEL servers has been added. At the same
-time, we're dropping the `develop` branch from this
-repository as it confusing for a lot of people and
-serves no real purpose here.
+**Merged pull requests:**
 
-## 2.1.1
+- Allow postgresql 8 module [\#121](https://github.com/voxpupuli/puppet-powerdns/pull/121) ([saz](https://github.com/saz))
 
-### Summary
+## [v2.2.1](https://github.com/voxpupuli/puppet-powerdns/tree/v2.2.1) (2022-06-20)
 
-Nothing was changed, but due to an incorrect merge
-the data in 2.1.0 became invalid.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v2.2.0...v2.2.1)
 
-## 2.1.0
+**Closed issues:**
 
-### Summary
+- Please release v2.1.5 [\#125](https://github.com/voxpupuli/puppet-powerdns/issues/125)
 
-This release adds preliminary support for FreeBSD and
-also adds support for PowerDNS 4.4.
+## [v2.2.0](https://github.com/voxpupuli/puppet-powerdns/tree/v2.2.0) (2022-06-20)
 
-### Features
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v2.1.4...v2.2.0)
 
-- Preliminary support for FreeBSD.
-- Allow additional values to be empty in the config.
+**Merged pull requests:**
 
-### Bugs
+- sort pdnsutil output to avoid update on each puppet run [\#124](https://github.com/voxpupuli/puppet-powerdns/pull/124) ([trefzer](https://github.com/trefzer))
+- disable rubocop errors on Gemfile and spec/spec\_helper\_acceptance.rb [\#123](https://github.com/voxpupuli/puppet-powerdns/pull/123) ([trefzer](https://github.com/trefzer))
+- allow to manage zones and records \(with opt out\) with puppet  [\#122](https://github.com/voxpupuli/puppet-powerdns/pull/122) ([trefzer](https://github.com/trefzer))
+- add support for version 4.6 [\#120](https://github.com/voxpupuli/puppet-powerdns/pull/120) ([maartenbeeckmans](https://github.com/maartenbeeckmans))
+- fix bug duplicate resource yum-plugin-priorities [\#119](https://github.com/voxpupuli/puppet-powerdns/pull/119) ([fe80](https://github.com/fe80))
+- Use the Rocky Linux mirrorlist when the OS name is Rocky [\#118](https://github.com/voxpupuli/puppet-powerdns/pull/118) ([wardhus](https://github.com/wardhus))
 
-- Authoritative and recursor package depend on apt repo (#80)
+## [v2.1.4](https://github.com/voxpupuli/puppet-powerdns/tree/v2.1.4) (2021-12-21)
 
-## 2.0.0
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/2.1.3...v2.1.4)
 
-### Summary
+**Merged pull requests:**
 
-This release drops support for EOL operating systems and
-Puppet 4. Puppet 5 is now the minimum requirement. It adds
-support for Puppet 7.
+- Use package\_ensure on backends' packages [\#117](https://github.com/voxpupuli/puppet-powerdns/pull/117) ([surprisingb](https://github.com/surprisingb))
 
-CI has been switched from Travis CI to Github Actions.
+## [2.1.3](https://github.com/voxpupuli/puppet-powerdns/tree/2.1.3) (2021-10-22)
 
-### Features
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/2.1.2...2.1.3)
 
-- Support for Puppet 7
+**Merged pull requests:**
 
-### Other
+- Update dependencies [\#115](https://github.com/voxpupuli/puppet-powerdns/pull/115) ([saz](https://github.com/saz))
+- add 4.5 as supported version [\#114](https://github.com/voxpupuli/puppet-powerdns/pull/114) ([neufeind](https://github.com/neufeind))
 
-- Switched from the old stahnma/epel to puppet/epel
-- Switched CI to Github Actions
+## [2.1.2](https://github.com/voxpupuli/puppet-powerdns/tree/2.1.2) (2021-06-11)
 
-## 1.7.2
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/2.1.1...2.1.2)
 
-### Summary
+**Closed issues:**
 
-This release adds PowerDNS 4.3 support and supports CentOS 8.
+- support puppetlabs-mysql 11.0.0 [\#106](https://github.com/voxpupuli/puppet-powerdns/issues/106)
+- support puppetlabs-stdlib 6.0.0 and higher [\#105](https://github.com/voxpupuli/puppet-powerdns/issues/105)
+- sqlite parameta for shemata missing, presetting is wrong - reopen as not fixed yet. [\#100](https://github.com/voxpupuli/puppet-powerdns/issues/100)
+- sqlite parameta for shemata missing, presetting is wrong [\#97](https://github.com/voxpupuli/puppet-powerdns/issues/97)
 
-### Features
+**Merged pull requests:**
 
-- Update allowed puppetlabs/apt requirement to 7.6.0.
-- Add support for PowerDNS 4.3
-- Add support for CentOS 8
+- Run actions on push to any branch or pull requests [\#112](https://github.com/voxpupuli/puppet-powerdns/pull/112) ([saz](https://github.com/saz))
+- update dependencies [\#111](https://github.com/voxpupuli/puppet-powerdns/pull/111) ([saz](https://github.com/saz))
+- chore: revert unfinished bugfix [\#102](https://github.com/voxpupuli/puppet-powerdns/pull/102) ([ju5t](https://github.com/ju5t))
+- Fix RedHat sqlite schema file [\#98](https://github.com/voxpupuli/puppet-powerdns/pull/98) ([LooOOooM](https://github.com/LooOOooM))
 
-## 1.7.1
+## [2.1.1](https://github.com/voxpupuli/puppet-powerdns/tree/2.1.1) (2021-02-07)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/2.1.0...2.1.1)
 
-This release updates stahnma/epel to 2.0.0. This is a first step towards
-CentOS 8 support.
+**Merged pull requests:**
 
-### Features
+- authoritative and recursor package should depend on apt repo, fixes \#90 [\#96](https://github.com/voxpupuli/puppet-powerdns/pull/96) ([saz](https://github.com/saz))
+- add 4.4 as supported version [\#95](https://github.com/voxpupuli/puppet-powerdns/pull/95) ([saz](https://github.com/saz))
+- allow local-ipv6 to be empty, fixes \#76 [\#94](https://github.com/voxpupuli/puppet-powerdns/pull/94) ([saz](https://github.com/saz))
+- Allow empty value for security-poll-suffix [\#88](https://github.com/voxpupuli/puppet-powerdns/pull/88) ([saz](https://github.com/saz))
 
-- Update stahnma/epel to 2.0.0.
+## [2.1.0](https://github.com/voxpupuli/puppet-powerdns/tree/2.1.0) (2021-02-07)
 
-## 1.7.0
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/2.0.0...2.1.0)
 
-### Summary
+**Closed issues:**
 
-This release adds support for PowerDNS 4.2.
+- Dependency cycle if apt repo is managed [\#90](https://github.com/voxpupuli/puppet-powerdns/issues/90)
+- Usage of version 4.4 not possible due to validation [\#89](https://github.com/voxpupuli/puppet-powerdns/issues/89)
+- disable ipv6 [\#76](https://github.com/voxpupuli/puppet-powerdns/issues/76)
 
-### Features
+**Merged pull requests:**
 
-- Add support for PowerDNS 4.2
-- Configure the database port in the MySQL-backend
-- Dependencies have been updated
+- Support for FreeBSD platform and minor fixes [\#86](https://github.com/voxpupuli/puppet-powerdns/pull/86) ([olevole](https://github.com/olevole))
 
-## 1.6.0
+## [2.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/2.0.0) (2021-01-04)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.7.2...2.0.0)
 
-This release adds support for Puppet 6 and includes Oracle Linux 7 in our
-acceptance tests. We have dropped tests for Puppet 4.7 due to the required
-Rubygem dependencies. We encourage you to upgrade to Puppet 5.10.
+**Closed issues:**
 
-### Features
+- Add support for Puppet 7 [\#84](https://github.com/voxpupuli/puppet-powerdns/issues/84)
+- Switch CI to Github Actions [\#83](https://github.com/voxpupuli/puppet-powerdns/issues/83)
+- Puppet module dependency for epel [\#82](https://github.com/voxpupuli/puppet-powerdns/issues/82)
+- PostgreSQL tests fail [\#80](https://github.com/voxpupuli/puppet-powerdns/issues/80)
 
-- Support for Puppet 6
-- Support for Oracle Linux 7
+**Merged pull requests:**
 
-## 1.5.0
+- Add support for Puppet 7 [\#85](https://github.com/voxpupuli/puppet-powerdns/pull/85) ([ju5t](https://github.com/ju5t))
+- Fix postgresql tests [\#81](https://github.com/voxpupuli/puppet-powerdns/pull/81) ([brigriffin](https://github.com/brigriffin))
 
-### Summary
+## [1.7.2](https://github.com/voxpupuli/puppet-powerdns/tree/1.7.2) (2020-12-05)
 
-This release adds support for Ubuntu 18.04, SQLite backend and allows you to
-override the EPEL-repository on RHEL-servers.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.7.1...1.7.2)
 
-### Features
+**Closed issues:**
 
-- Support for Ubuntu 18.04.
-- Support for SQLite.
-- Support for `custom_epel` setting.
+- Upgrade dependencies [\#77](https://github.com/voxpupuli/puppet-powerdns/issues/77)
 
-### Bugs
+**Merged pull requests:**
 
-- Correct Rubocop dependency and styling.
-- Remove default Bind-backend on Debian systems.
+- Add support for CentOS 8 [\#79](https://github.com/voxpupuli/puppet-powerdns/pull/79) ([ju5t](https://github.com/ju5t))
+- Bump apt dependency to 7.6.0 [\#78](https://github.com/voxpupuli/puppet-powerdns/pull/78) ([brigriffin](https://github.com/brigriffin))
+- add support for PDNS 4.3 and refactor data type and support case [\#73](https://github.com/voxpupuli/puppet-powerdns/pull/73) ([crigertg](https://github.com/crigertg))
 
-## 1.4.0
+## [1.7.1](https://github.com/voxpupuli/puppet-powerdns/tree/1.7.1) (2020-02-15)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.7.0...1.7.1)
 
-This adds support for LDAP as a backend for PowerDNS.
+## [1.7.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.7.0) (2020-01-26)
 
-### Features
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.6.1...1.7.0)
 
-- Support for LDAP as backend.
+## [1.6.1](https://github.com/voxpupuli/puppet-powerdns/tree/1.6.1) (2019-10-23)
 
-### Bugs
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.6.0...1.6.1)
 
-- Remove duplicate packages and settings when `custom_repo` is `true`.
-- Document duplicate declaration errors when using both the recursor and
-- authoritative service.
+**Closed issues:**
 
-## 1.3.0
+- Upgrade dependencies for Puppet 6 support [\#68](https://github.com/voxpupuli/puppet-powerdns/issues/68)
 
-### Summary
+## [1.6.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.6.0) (2019-03-16)
 
-This completes support for PostgreSQL and adds Bind as backend for PowerDNS.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.5.0...1.6.0)
 
-### Features
+**Implemented enhancements:**
 
-- Full support for PostgreSQL as backend.
-- Support for Bind as backend.
-- Support for Debian 9.
+- Bump dependencies to recent versions [\#63](https://github.com/voxpupuli/puppet-powerdns/issues/63)
 
-## 1.2.3
+**Closed issues:**
 
-### Summary
+- failing on OEL linux [\#64](https://github.com/voxpupuli/puppet-powerdns/issues/64)
 
-This release reimplements the `$version` parameter.
+## [1.5.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.5.0) (2018-10-30)
 
-### Bugs
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.4.0...1.5.0)
 
-- The `$version`-functionality was never implemented by accident.
-- Update apt id to be a full fingerprint.
+**Implemented enhancements:**
 
-## 1.2.2
+- Support Ubuntu 18.04 [\#49](https://github.com/voxpupuli/puppet-powerdns/issues/49)
 
-This release has no code changes. An incorrect file was added to the Forge
-and this release is to correct that error.
+**Closed issues:**
 
-## 1.2.1
+- Epel module included as hard dependency [\#58](https://github.com/voxpupuli/puppet-powerdns/issues/58)
 
-This is a minor release which removes unused template files.
+## [1.4.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.4.0) (2018-06-06)
 
-## 1.2.0
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.3.0...1.4.0)
 
-### Summary
+**Closed issues:**
 
-PowerDNS 4.1 is now the default version. You can switch versions through a
-newly introduced parameter `$version`. This will change the repositories to
-the latest version but it will not update PowerDNS for you, nor does it make
-any required database changes.
+- Support authoritative AND recursor simulaneously on one node [\#56](https://github.com/voxpupuli/puppet-powerdns/issues/56)
 
-### Features
+## [1.3.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.3.0) (2018-05-24)
 
-- Add version support. This also includes the EPEL-repository on RHEL.
-- Use the MySQL database schema as provided by PowerDNS.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.2.3...1.3.0)
 
-## 1.1.0
+**Implemented enhancements:**
 
-### Features
+- PostgreSQL backend [\#8](https://github.com/voxpupuli/puppet-powerdns/issues/8)
 
-- Use Puppet 4 datatypes.
-- Support for `backend_create_tables`, making database management optional.
-- (Basic) Support for PostgreSQL.
-- Support all RedHat flavours.
-- Bump apt support to < 5.0.0
+**Closed issues:**
 
-### Bugs
+- mysql\_schema\_file is not working on Debian-systems [\#54](https://github.com/voxpupuli/puppet-powerdns/issues/54)
+- Bind backend is broken [\#51](https://github.com/voxpupuli/puppet-powerdns/issues/51)
+- Fresh install of powerdns 4.1 fails on Debian [\#47](https://github.com/voxpupuli/puppet-powerdns/issues/47)
 
-- Contain private subclasses
-- Set `gmysql-host` when managing MySQL.
-- Allow both String and Integer as value for `powerdns::config` values.
+## [1.2.3](https://github.com/voxpupuli/puppet-powerdns/tree/1.2.3) (2018-04-28)
 
-## 1.0.1
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.2.2...1.2.3)
 
-### Summary
+**Fixed bugs:**
 
-This marks the long overdue stable release of the PowerDNS module. The 1.0.0
-release was missing these release notes so we immediately released 1.0.1.
+- Forge module contains lib/facter/powerdns\_version.rb with error [\#44](https://github.com/voxpupuli/puppet-powerdns/issues/44)
 
-We have dropped support for Puppet 3 in this release.
+**Closed issues:**
 
-### Features
+- New $version parameter not doing anything [\#45](https://github.com/voxpupuli/puppet-powerdns/issues/45)
 
-- Default to Puppet 4.
-- Support removing config with `ensure => absent`.
-- Use Puppet 4 data types in `config.pp`.
+## [1.2.2](https://github.com/voxpupuli/puppet-powerdns/tree/1.2.2) (2018-04-20)
 
-### Bugs
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.2.1...1.2.2)
 
-- Rubocop updates caused tests to fail.
-- `allow-notify-from` was not allowed to be empty.
+## [1.2.1](https://github.com/voxpupuli/puppet-powerdns/tree/1.2.1) (2018-04-19)
 
-## 0.0.12
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.2.0...1.2.1)
 
-### Summary
+## [1.2.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.2.0) (2018-04-19)
 
-We have dropped Ruby 1.9.3 from our tests and added Rubocop coverage to
-ensure we write decent code where possible.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.1.0...1.2.0)
 
-### Features
+**Implemented enhancements:**
 
-- Rubocop coverage for all Ruby code in this module.
+- Use database schemas provided by PowerDNS [\#40](https://github.com/voxpupuli/puppet-powerdns/issues/40)
+- Update for powerdns 4.1 [\#30](https://github.com/voxpupuli/puppet-powerdns/issues/30)
 
-### Bugfixes
+## [1.1.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.1.0) (2018-03-09)
 
-- The README wrongly mentioned listen-address instead of local-address
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.0.1...1.1.0)
 
-## 0.0.11
+**Implemented enhancements:**
 
-### Summary
+- Module requires an old version of puppetlabs/apt [\#38](https://github.com/voxpupuli/puppet-powerdns/issues/38)
+- powerdns::backends::mysql should set gmysql-host [\#31](https://github.com/voxpupuli/puppet-powerdns/issues/31)
+- Remote MySQL Backend [\#19](https://github.com/voxpupuli/puppet-powerdns/issues/19)
+- Redhat support [\#7](https://github.com/voxpupuli/puppet-powerdns/issues/7)
 
-This release officially drops support for Puppet 2.
+**Fixed bugs:**
 
-#### Features
+- powerdns::config only accepts String [\#37](https://github.com/voxpupuli/puppet-powerdns/issues/37)
 
-- Allow the `only-notify` PowerDNS configuration setting to be empty.
-- Improved error messages on failure when setting configurations.
+## [1.0.1](https://github.com/voxpupuli/puppet-powerdns/tree/1.0.1) (2018-02-13)
 
-#### Bugfixes
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/1.0.0...1.0.1)
 
-- Added the recursor to our test suite.
-- Update Ruby versions in our test suite.
+## [1.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/1.0.0) (2018-02-13)
 
-## 0.0.10
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.12...1.0.0)
 
-### Summary
+**Implemented enhancements:**
 
-Version bump to update forge.puppet.com.
+- powerdns::config ensure =\> absent should remove setting and shouldn't require 'value' [\#20](https://github.com/voxpupuli/puppet-powerdns/issues/20)
 
-## 0.0.9
+**Fixed bugs:**
 
-### Summary
+- Tests are not passing anymore [\#21](https://github.com/voxpupuli/puppet-powerdns/issues/21)
 
-This release adds 1 feature.
+**Closed issues:**
 
-#### Features
+- README.md mentions 'listen-address' instead of 'local-address' [\#18](https://github.com/voxpupuli/puppet-powerdns/issues/18)
 
-- Added `enable` for the recursor and authoritative service
+## [0.0.12](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.12) (2017-10-14)
 
-## 0.0.8
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.11...0.0.12)
 
-### Summary
+## [0.0.11](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.11) (2017-08-30)
 
-This release adds 1 feature and solves 3 bugs.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.10...0.0.11)
 
-#### Features
+**Fixed bugs:**
 
-- Added support for `ensure` to the recursor and authoritative package
+- powerdns::config should allow empty value on only-notify  [\#15](https://github.com/voxpupuli/puppet-powerdns/issues/15)
 
-#### Bugfixes
+**Merged pull requests:**
 
-- Make powerdns::config more specific
-- Pin rake tests to simplecov-console to 0.3.1
-- Only fail on `db_root_password` if `backend_install` is true
+- Update Ruby versions in our tests [\#17](https://github.com/voxpupuli/puppet-powerdns/pull/17) ([ju5t](https://github.com/ju5t))
+- Allow only-notify to be empty [\#16](https://github.com/voxpupuli/puppet-powerdns/pull/16) ([ju5t](https://github.com/ju5t))
 
-## 0.0.7
+## [0.0.10](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.10) (2017-07-11)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.9...0.0.10)
 
-This release adds support for Debian 8.
+## [0.0.9](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.9) (2017-07-11)
 
-#### Features
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.8...0.0.9)
 
-- Added support for Debian 8
+**Implemented enhancements:**
 
-#### Bugfixes
+- Add Changelog [\#13](https://github.com/voxpupuli/puppet-powerdns/issues/13)
 
-- Only try to set config if the corresponding services are used
-- Removed our default supermaster-query setting as it was causing issues on 4.x
+**Closed issues:**
 
-## 0.0.6
+- instal: apt and mysql problems [\#12](https://github.com/voxpupuli/puppet-powerdns/issues/12)
 
-### Summary
+## [0.0.8](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.8) (2017-02-09)
 
-This release adds 3 features and solves 1 bug.
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.7...0.0.8)
 
-#### Features
+**Fixed bugs:**
 
-- Added support for a custom supermaster-query
-- Added support to disable the installation of PowerDNS packages
-- Added support to disable the configuration of the PowerDNS repositories
+- db\_root\_password is still required if backend\_install is false [\#10](https://github.com/voxpupuli/puppet-powerdns/issues/10)
 
-#### Bugfixes
+**Merged pull requests:**
 
-- Renamed authorative to authoritative according to the PowerDNS manual
+- Change basic check to look at backend\_install [\#11](https://github.com/voxpupuli/puppet-powerdns/pull/11) ([benhainline](https://github.com/benhainline))
+- Be able to overwrite package version [\#9](https://github.com/voxpupuli/puppet-powerdns/pull/9) ([stevie-](https://github.com/stevie-))
 
-## 0.0.5
+## [0.0.7](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.7) (2016-12-23)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.6...0.0.7)
 
-This release adds support for Ubuntu 16.04.
+**Merged pull requests:**
 
-#### Features
+- Only try to set config if we want to the corresponding services [\#6](https://github.com/voxpupuli/puppet-powerdns/pull/6) ([stevie-](https://github.com/stevie-))
 
-- Added support for Ubuntu 16.04
+## [0.0.6](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.6) (2016-11-04)
 
-## 0.0.4
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.5...0.0.6)
 
-### Summary
+**Closed issues:**
 
-This release adds support for Ubuntu 14.04 and CentOS 6.
+- Spelling Fix [\#3](https://github.com/voxpupuli/puppet-powerdns/issues/3)
 
-#### Features
+**Merged pull requests:**
 
-- Added support for Ubuntu 14.04
-- Added support for CentOS 6
-- Improved the test suite and included support for Beaker
+- Spelling Fix [\#4](https://github.com/voxpupuli/puppet-powerdns/pull/4) ([pckls](https://github.com/pckls))
+- Be able to overwrite supermaster\_query [\#2](https://github.com/voxpupuli/puppet-powerdns/pull/2) ([stevie-](https://github.com/stevie-))
+- Support to disable repo installation and use custom repo [\#1](https://github.com/voxpupuli/puppet-powerdns/pull/1) ([stevie-](https://github.com/stevie-))
 
-#### Bugfixes
+## [0.0.5](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.5) (2016-10-12)
 
-- Made sure the repository is added before pdns-recursor is installed
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.4...0.0.5)
 
-## 0.0.3
+## [0.0.4](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.4) (2016-10-09)
 
-### Summary
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.3...0.0.4)
 
-This release adds spec tests.
+## [0.0.3](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.3) (2016-09-28)
 
-#### Features
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.2...0.0.3)
 
-- Added spec tests
+## [0.0.2](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.2) (2016-08-11)
 
-#### Bugfixes
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/0.0.1...0.0.2)
 
-- Changed the root_home reference when creating database tables
+## [0.0.1](https://github.com/voxpupuli/puppet-powerdns/tree/0.0.1) (2016-07-30)
 
-## 0.0.2
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/ba18260ad5a1f431560d2d6d161853991af0a02f...0.0.1)
 
-### Summary
 
-This release solves one bug.
 
-#### Bugfixes
-
-- Added a dependency on the pdns package when configuring MySQL
-
-## 0.0.1
-
-### Summary
-
-Initial release.
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
