@@ -8,6 +8,7 @@ Puppet::Type.newtype(:powerdns_zone_private) do
          call this resource with the zone records added.'
 
   ensurable do
+    desc 'Whether the zone should be present or absent'
     defaultvalues
     defaultto :present
   end
