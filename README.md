@@ -2,8 +2,7 @@
 
 [![Build Status](https://github.com/sensson/puppet-powerdns/workflows/CI/badge.svg)](https://github.com/sensson/puppet-powerdns/actions) [![Puppet Forge](https://img.shields.io/puppetforge/v/sensson/powerdns.svg?maxAge=2592000?style=plastic)](https://forge.puppet.com/sensson/powerdns)
 
-This module can be used to configure both the recursor and authoritative
-PowerDNS 4 server. It officially supports Puppet 7 and higher.
+This module can be used to configure both the PowerDNS recursor and authoritative server.
 
 ## Examples
 
@@ -20,8 +19,8 @@ class { 'powerdns':
 }
 ```
 
-If you want to install both the recursor and the authoritative service on the
-same server it is recommended to have the services listen on their own IP
+If you want to install both the recursor and the authoritative server on the
+same node it is recommended to have the services listen on their own IP
 address. The example below needs to be adjusted to use the ip addresses of your
 server.
 
@@ -117,6 +116,7 @@ class { 'powerdns':
   db_file => '/opt/powerdns.sqlite3',
 }
 ```
+
 To use lmdb you must set `backend_install` and `backend_create_tables` to
 false. For example:
 
@@ -129,16 +129,20 @@ class { 'powerdns':
 ```
 
 ### Manage zones with this module
+
 With this module you can manage zones if you use a backend that is capable of doing so (eg. sqllite, postgres or mysql).
 
 You can add a zone 'example.org' by using:
+
 ``` puppet
  powerdns_zone{'example.org': }
 ```
+
 This will add the zone which is then managed through puppet any records not added
 through puppet will be deleted additionaly a SOA record is generated. To just ensure the
 zone is available, but not manage any records use (and do not add any powerdns\_record
 resources with target this domain):
+
 ``` puppet
  powerdns_zone{'example.org':
    manage_records => false,
@@ -148,6 +152,7 @@ resources with target this domain):
 To addjust the SOA record (if add\_soa is set to true), use the soa\_\* parameters documented in the powerdns\_record resource.
 
 The zone records can be managed through the powerdns\_record resource. As an example we add a NS an A and an AAAA record:
+
 ``` puppet
  powerdns_record{'nameserver1':
    target_zone => 'example.org',
@@ -171,158 +176,28 @@ The zone records can be managed through the powerdns\_record resource. As an exa
    rcontent    => '127.0.0.1'
  }
 ```
+
 Remark: if the target\_zone is not managed with powerdns\_zone resource, powerdns\_record does not change anything!
 
-### Sensitive secrets
-
-Passwords can be passed either as plain-text strings or as [Puppet's Sensitive type](https://www.puppet.com/docs/puppet/7/lang_data_sensitive.html) when appropriate encrypted backend is configured on Puppet server.
-
 ### Manage autoprimaries (automatic provisioning of secondaries)
+
 It's possible to manage the the 'autoprimaries' with puppet (For a decription of the autoprimary functionality in
 powerdns see [powerdns manual](https://doc.powerdns.com/authoritative/modes-of-operation.html#autoprimary-automatic-provisioning-of-secondaries).
 The autoprimaries are set with the powerdns\_autoprimary resource. As an example we add the primary 1.2.3.4 named ns1.example.org whith the account 'test'
+
 ``` yaml
 powerdns_autoprimary{'1.2.3.4@ns1.example.org':
   ensure  => 'present',
   account => 'test',
 }
 ```
+
 As an alternative, you can set the autoprimaries parameter of the powerdns class to achive the same (eg. if you use hiera).
 
 For removal of an autoprimary set ensure to 'absent' or set the parameter purge\_autoprimaries of the powerdns class to true which willa
 remove all autoprimaries that are not present in the puppet manifest.
 
-## Reference
-
-### Parameters
-
-#### powerdns
-
-We provide a number of configuration options to change particular settings
-or to override our defaults when required.
-
-##### `authoritative`
-
-Install the PowerDNS authoritative server. Defaults to true.
-
-##### `recursor`
-
-Install the PowerDNS recursor. Defaults to false.
-
-##### `backend`
-
-Choose a backend for the authoritative server. Valid values are 'mysql',
-'postgresql' and 'bind'. Defaults to 'mysql'.
-
-##### `backend_install`
-
-If you set this to true it will try to install a database backend for
-you. This requires `db_root_password`. Defaults to true.
-
-##### `backend_create_tables`
-
-If set to true, it will ensure the required powerdns tables exist in your
-backend database. If your database is on a separate host or you are using the
-the Bind backend, set `backend_install` and `backend_create_tables` to false.
-Defaults to true.
-
-##### `db_root_password`
-
-If you set `backend_install` to true you are asked to specify a root
-password for your database. Accepts either `String` or `Sensitive` type.
-
-##### `db_username`
-
-Set the database username. Defaults to 'powerdns'.
-
-##### `db_password`
-
-Set the database password. Accepts either `String` or `Sensitive` type. Default is empty.
-
-##### `db_name`
-
-The database you want to use for PowerDNS. Defaults to 'powerdns'.
-
-##### `db_host`
-
-The host where your database should be created. Defaults to 'localhost'.
-
-##### `db_port`
-
-The port to use when connecting to your database. Defaults to '3306'. Only
-supported in the MySQL backend currently.
-
-##### `db_file`
-
-The file where database will be stored when using SQLite backend. Defaults to '/var/lib/powerdns/powerdns.sqlite3'
-
-##### `ldap_host`
-
-The host where your LDAP server can be found. Defaults to 'ldap://localhost/'.
-
-##### `ldap_basedn`
-
-The path to search for in LDAP. Defaults to undef.
-
-##### `ldap_method`
-
-Defines how LDAP is queried. Defaults to 'strict'.
-
-##### `ldap_binddn`
-
-Path to the object to authenticate against. Defaults to undef.
-
-##### `ldap_secret`
-
-Password for simple authentication against ldap_basedn. Accepts either `String` or `Sensitive` type. Defaults to undef.
-
-##### `lmdb_filename`
-
-The file where database will be stored when using LMDB backend. Defaults to '/var/lib/powerdns/powerdns.lmdb'
-
-##### `lmdb_schema_version`
-
-The schema version to use when creating the LMDB database. Defaults to undef, using the powerdns default.
-
-##### `lmdb_shards`
-
-The number of shards to use when creating the LMDB database. Defaults to undef, using the powerdns default.
-
-##### `lmdb_sync_mode`
-
-The sync mode to use when creating the LMDB database. Defaults to undef, using the powerdns default.
-
-##### `custom_repo`
-
-Don't manage the PowerDNS repo with this module. Defaults to false.
-
-##### `custom_epel`
-
-Don't manage the EPEL repo with this module. Defaults to false.
-
-##### `version`
-
-Set the PowerDNS version. Defaults to '4.1'.
-
-##### `mysql_schema_file`
-
-Set the PowerDNS MySQL schema file. Defaults to the location provided by
-PowerDNS.
-
-##### `pgsql_schema_file`
-
-Set the PowerDNS PostgreSQL schema file. Defaults to the location provided by
-PowerDNS.
-
-#### powerdns::authoritative and powerdns::recursor
-
-##### `package_ensure`
-
-You can set the package version to be installed. Defaults to 'installed'.
-
-### Defines
-
-#### powerdns::config
+### Manage settings
 
 All PowerDNS settings can be managed with `powerdns::config`. Depending on the
 backend we will set a few configuration settings by default. All other
@@ -336,24 +211,6 @@ powerdns::config { 'api':
   type    => 'authoritative',
 }
 ```
-
-##### `setting`
-
-The setting you want to change.
-
-##### `value`
-
-The value for the above setting.
-
-##### `type`
-
-The configuration file you want to change. Valid values are 'authoritative',
-'recursor'. Defaults to 'authoritative'.
-
-##### `ensure`
-
-Specify whether or not this configuration should be present. Valid values are
-'present', 'absent'. Defaults to 'present'.
 
 ### Hiera
 
@@ -400,15 +257,6 @@ powerdns::recursor::config:
 If you have other settings that share the same name between the recursor and
 authoritative server you would have to use the same approach to prevent
 duplicate declaration errors.
-
-## Limitations
-
-Schemas in the packages on EL have the exact PowerDNS hardcoded in the paths,
-the main class has three parameters where you can adjust it.
-
-* `mysql_schema_file`
-* `pgsql_schema_file`
-* `sqlite_schema_file`
 
 ## Development
 

@@ -1,4 +1,14 @@
-# powerdns::config
+# @summary Manage powerdns settings
+#
+# @param setting
+#   The setting you want to change
+# @param value
+#   The value for the above setting
+# @param ensure
+#   Specify whether or not this configuration should be present
+# @param type
+#   If this configuration applies to the authoritative server
+#   or the recursor
 define powerdns::config (
   String[1] $setting = $title,
   Powerdns::ConfigValue $value = '',

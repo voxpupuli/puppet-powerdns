@@ -1,9 +1,94 @@
-# powerdns
+# @summary Manages powerdns authoritative server and recursor
 #
-# @param autoprimaries
-#   Hash of autoprimaries the ensurce (with resource powerdns_autoprimary)
-# @param purge_autoprimaries
-#   Set this to true if you like to purge all autoprimaries not managed with puppet
+# @param authoritative_package_name
+#   Name of the authoritative server package
+# @param authoritative_package_ensure
+#   Authoritative server ensure property
+# @param authoritative_extra_packages
+#   Extra packages to install with the authoritative server
+# @param authoritative_extra_packages_ensure
+#   Authoritative server extra packages ensure property
+# @param authoritative_service_name
+#   Authoritative server service name
+# @param authoritative_configdir
+#   Authoritative config directory path
+# @param authoritative_config
+#   Authoritative config file path
+# @param authoritative_version
+#   Authoritative server version
+# @param db_file
+#   Path of the SQLite database file
+#   The direct parent directory will be managed by this module
+# @param mysql_schema_file
+#   MySQL database schema file path
+# @param pgsql_schema_file
+#   PostgreSQL database schema file path
+# @param sqlite_schema_file
+#   SQLite database schema file path
+# @param recursor_package_name
+#   Recursor package name
+# @param recursor_package_ensure
+#   Recursor package ensure property
+# @param recursor_service_name
+#   Recursor service name
+# @param recursor_configdir
+#   Recursor config directory path
+# @param recursor_config
+#   Recursor config file path
+# @param recursor_version
+#   Recursor version
+# @param sqlite_package_name
+#   SQLite package name to install, if required
+# @param mysql_backend_package_name
+#   Authoritative server mysql backend package name
+# @param ldap_backend_package_name
+#   Authoritative server ldap backend package name
+# @param pgsql_backend_package_name
+#   Authoritative server postgresql backend package name
+# @param sqlite_backend_package_name
+#   Authoritative server sqlite backend package name
+# @param lmdb_backend_package_name
+#   Authoritative server lmdb backend package name
+# @param mysql_charset
+#   The charecter set for the MySQL database
+# @param mysql_collate
+#   The collation for the MySQL database
+# @param authoritative
+#   Whether or not this module will manage the authoritative server
+# @param recursor
+#   Whether or not this module will manage the recursor
+# @param backend
+#   Which backend should the authoritative server use
+# @param backend_install
+#   If you set this to true it will try to install a database backend
+#   for you. This requires `db_root_password`
+# @param backend_create_tables
+#   Whether or not backend tables should be created
+# @param db_root_password
+#   If you set `backend_install` to true you are asked top specify a root
+#   password for your database
+# @param db_username
+#   Backend database username
+# @param db_password
+#   Backend database password
+# @param db_name
+#   Backend database name
+# @param db_host
+#   Backend database host
+# @param db_port
+#   Database port to use
+# @param require_db_password
+#   Whether or not db_password must be set
+# @param ldap_host
+#   LDAP server to connect to
+# @param ldap_basedn
+#   LDAP base DN
+# @param ldap_method
+#   LDAP method to use
+# @param ldap_binddn
+#   LDAP object to authenticate against
+# @param ldap_secret
+#   LDAP password of the binddn object
 # @param lmdb_filename
 #   Filename for the lmdb database
 # @param lmdb_schema_version
@@ -12,7 +97,16 @@
 #   Records database will be split into this number of shards
 # @param lmdb_sync_mode
 #   Sync mode for LMDB. One of 'nosync', 'sync', 'nometasync', 'mapasync'
-#
+# @param custom_repo
+#   Don't manage the PowerDNS repo with this module
+# @param custom_epel
+#   Don't manage the EPEL repo with this module
+# @param forward_zones
+#   Configures recursor forward_zones
+# @param autoprimaries
+#   Hash of autoprimaries the ensurce (with resource powerdns_autoprimary)
+# @param purge_autoprimaries
+#   Set this to true if you like to purge all autoprimaries not managed with puppet
 # @param authoritative_group
 #   This group will be set on authoritative server files.
 #
