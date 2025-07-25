@@ -1,6 +1,5 @@
 ---
-powerdns::db_dir: /var/db/powerdns
-powerdns::db_file: "%{lookup('powerdns::db_dir')}/powerdns.sqlite3"
+powerdns::db_file: "/var/db/powerdns/powerdns.sqlite3"
 powerdns::mysql_schema_file: /usr/local/share/doc/powerdns/schema.mysql.sql
 powerdns::pgsql_schema_file: /usr/local/share/doc/powerdns/schema.pgsql.sql
 powerdns::sqlite_schema_file: /usr/local/share/doc/powerdns/schema.sqlite3.sql

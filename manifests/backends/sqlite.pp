@@ -32,7 +32,7 @@ class powerdns::backends::sqlite (
     }
   }
   if $powerdns::backend_create_tables {
-    file { $powerdns::db_dir:
+    file { dirname($powerdns::db_file):
       ensure  => directory,
       mode    => '0755',
       owner   => 'pdns',
