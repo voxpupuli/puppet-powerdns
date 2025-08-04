@@ -100,7 +100,6 @@ The following parameters are available in the `powerdns` class:
 * [`autoprimaries`](#-powerdns--autoprimaries)
 * [`purge_autoprimaries`](#-powerdns--purge_autoprimaries)
 * [`authoritative_group`](#-powerdns--authoritative_group)
-* [`db_dir`](#-powerdns--db_dir)
 
 ##### <a name="-powerdns--authoritative_package_name"></a>`authoritative_package_name`
 
@@ -490,12 +489,6 @@ Data type: `String[1]`
 This group will be set on authoritative server files.
 
 Default value: `'pdns'`
-
-##### <a name="-powerdns--db_dir"></a>`db_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
 
 ### <a name="powerdns--authoritative"></a>`powerdns::authoritative`
 
