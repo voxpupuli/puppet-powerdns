@@ -1,6 +1,6 @@
 # PowerDNS
 
-[![Build Status](https://github.com/sensson/puppet-powerdns/workflows/CI/badge.svg)](https://github.com/sensson/puppet-powerdns/actions) [![Puppet Forge](https://img.shields.io/puppetforge/v/sensson/powerdns.svg?maxAge=2592000?style=plastic)](https://forge.puppet.com/sensson/powerdns)
+[![Build Status](https://github.com/voxpupuli/puppet-powerdns/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-powerdns/actions) [![Puppet Forge](https://img.shields.io/puppetforge/v/voxpupuli/powerdns.svg?maxAge=2592000?style=plastic)](https://forge.puppet.com/voxpupuli/powerdns)
 
 This module can be used to configure both the PowerDNS recursor and authoritative server.
 
