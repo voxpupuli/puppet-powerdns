@@ -35,6 +35,14 @@
 #   Recursor config directory path
 # @param recursor_config
 #   Recursor config file path
+# @param recursor_user
+#   Under which user recursor is running
+# @param recursor_group
+#   Under which group recursor is running
+# @param recursor_file_owner
+#   Owner of recursor config files
+# @param recursor_file_group
+#   Group of recursor config files
 # @param recursor_version
 #   Recursor version
 # @param sqlite_package_name
@@ -107,8 +115,14 @@
 #   Hash of autoprimaries the ensurce (with resource powerdns_autoprimary)
 # @param purge_autoprimaries
 #   Set this to true if you like to purge all autoprimaries not managed with puppet
+# @param authoritative_user
+#   Under which user the authoritative server is running
 # @param authoritative_group
-#   This group will be set on authoritative server files.
+#   Under which group the authoritative server is running
+# @param authoritative_file_owner
+#   Owner of authoritative config files
+# @param authoritative_file_group
+#   Group of authoritative config files
 #
 class powerdns (
   String[1] $authoritative_package_name,
@@ -128,6 +142,10 @@ class powerdns (
   String[1] $recursor_service_name,
   Stdlib::Absolutepath $recursor_configdir,
   Stdlib::Absolutepath $recursor_config,
+  String[1] $recursor_user,
+  String[1] $recursor_group,
+  String[1] $recursor_file_owner,
+  String[1] $recursor_file_group,
   Pattern[/[4,5]\.[0-9]+/] $recursor_version,
   String[1] $sqlite_package_name,
   Optional[String[1]] $mysql_backend_package_name = undef,
@@ -163,7 +181,10 @@ class powerdns (
   Hash $forward_zones = {},
   Powerdns::Autoprimaries $autoprimaries = {},
   Boolean $purge_autoprimaries = false,
+  String[1] $authoritative_user = 'pdns',
   String[1] $authoritative_group = 'pdns',
+  String[1] $authoritative_file_owner = 'root',
+  String[1] $authoritative_file_group = $authoritative_group,
 ) {
   # Do some additional checks. In certain cases, some parameters are no longer optional.
   if $authoritative {

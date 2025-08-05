@@ -12,8 +12,8 @@ class powerdns::authoritative inherits powerdns {
 
   file { $powerdns::authoritative_config:
     ensure  => 'file',
-    owner   => 'root',
-    group   => $powerdns::authoritative_group,
+    owner   => $powerdns::authoritative_file_owner,
+    group   => $powerdns::authoritative_file_group,
     mode    => '0640',
     require => Package[$powerdns::authoritative_package_name],
   }

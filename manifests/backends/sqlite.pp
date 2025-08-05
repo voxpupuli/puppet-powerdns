@@ -35,19 +35,19 @@ class powerdns::backends::sqlite (
     file { dirname($powerdns::db_file):
       ensure  => directory,
       mode    => '0755',
-      owner   => 'pdns',
-      group   => $powerdns::authoritative_group,
+      owner   => $powerdns::authoritative_file_owner,
+      group   => $powerdns::authoritative_file_group,
       require => Package[$powerdns::authoritative_package_name],
     }
     -> file { $powerdns::db_file:
       ensure => file,
       mode   => '0644',
-      owner  => 'pdns',
-      group  => $powerdns::authoritative_group,
+      owner  => $powerdns::authoritative_file_owner,
+      group  => $powerdns::authoritative_file_group,
     }
     -> exec { 'powerdns-sqlite3-create-tables':
       command => "/usr/bin/env sqlite3 ${powerdns::db_file} < ${powerdns::sqlite_schema_file}",
-      user    => 'pdns',
+      user    => $powerdns::authoritative_user,
       unless  => "/usr/bin/env test `echo '.tables domains' | sqlite3 ${powerdns::db_file} | wc -l` -eq 1",
       before  => Service['pdns'],
       require => Package[$powerdns::authoritative_package_name],
