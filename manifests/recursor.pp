@@ -12,8 +12,8 @@ class powerdns::recursor (
 
   file { $powerdns::recursor_config:
     ensure  => file,
-    owner   => 'root',
-    group   => 0,
+    owner   => $powerdns::recursor_file_owner,
+    group   => $powerdns::recursor_file_group,
     require => Package[$powerdns::recursor_package_name],
   }
 
@@ -21,8 +21,8 @@ class powerdns::recursor (
     $zone_config = "${powerdns::recursor_configdir}/forward_zones.conf"
     file { $zone_config:
       ensure  => file,
-      owner   => 'root',
-      group   => 0,
+      owner   => $powerdns::recursor_file_owner,
+      group   => $powerdns::recursor_file_group,
       content => template('powerdns/forward_zones.conf.erb'),
       notify  => Service['pdns-recursor'],
     }

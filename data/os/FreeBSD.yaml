@@ -18,3 +18,5 @@ powerdns::recursor_configdir: /usr/local/etc/pdns
 powerdns::recursor_config: "%{lookup('powerdns::recursor_configdir')}/recursor.conf"
 powerdns::recursor_package_name: powerdns-recursor
 powerdns::recursor_service_name: pdns-recursor
+powerdns::recursor_user: pdns_recursor
+powerdns::recursor_file_group: wheel

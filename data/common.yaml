@@ -4,3 +4,7 @@ powerdns::authoritative_extra_packages_ensure: installed
 powerdns::authoritative_version: '4.9'
 powerdns::recursor_package_ensure: installed
 powerdns::recursor_version: '5.0'
+powerdns::recursor_user: pdns
+powerdns::recursor_group: pdns
+powerdns::recursor_file_owner: root
+powerdns::recursor_file_group: "%{lookup('powerdns::recursor_group')}"

@@ -288,7 +288,7 @@ describe 'powerdns', type: :class do
           it do
             is_expected.to contain_file('/var/lib/powerdns/db.sqlite3').with(
               'ensure' => 'file',
-              'owner' => 'pdns',
+              'owner' => 'root',
               'group' => 'pdns',
               'mode' => '0644'
             )
@@ -297,7 +297,7 @@ describe 'powerdns', type: :class do
           it do
             is_expected.to contain_file('/var/lib/powerdns').with(
               'ensure' => 'directory',
-              'owner' => 'pdns',
+              'owner' => 'root',
               'group' => 'pdns',
               'mode' => '0755'
             )
@@ -616,12 +616,12 @@ describe 'powerdns', type: :class do
           case facts[:os]['family']
           when 'RedHat'
             it {
-              is_expected.to contain_yumrepo('powerdns'). \
+              is_expected.to contain_yumrepo('powerdns').
                 with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-47')
             }
 
             it {
-              is_expected.to contain_yumrepo('powerdns-recursor'). \
+              is_expected.to contain_yumrepo('powerdns-recursor').
                 with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-47')
             }
           when 'Debian'
@@ -658,12 +658,12 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").with_ensure('file') }
 
           it {
-            is_expected.to contain_powerdns__config('forward-zones-file'). \
+            is_expected.to contain_powerdns__config('forward-zones-file').
               with(value: "#{recursor_dir}/forward_zones.conf")
           }
 
           it {
-            is_expected.to contain_file("#{recursor_dir}/forward_zones.conf"). \
+            is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").
               with_content(%r{^example.com=1.1.1.1})
           }
         end

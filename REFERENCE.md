@@ -64,6 +64,10 @@ The following parameters are available in the `powerdns` class:
 * [`recursor_service_name`](#-powerdns--recursor_service_name)
 * [`recursor_configdir`](#-powerdns--recursor_configdir)
 * [`recursor_config`](#-powerdns--recursor_config)
+* [`recursor_user`](#-powerdns--recursor_user)
+* [`recursor_group`](#-powerdns--recursor_group)
+* [`recursor_file_owner`](#-powerdns--recursor_file_owner)
+* [`recursor_file_group`](#-powerdns--recursor_file_group)
 * [`recursor_version`](#-powerdns--recursor_version)
 * [`sqlite_package_name`](#-powerdns--sqlite_package_name)
 * [`mysql_backend_package_name`](#-powerdns--mysql_backend_package_name)
@@ -99,7 +103,10 @@ The following parameters are available in the `powerdns` class:
 * [`forward_zones`](#-powerdns--forward_zones)
 * [`autoprimaries`](#-powerdns--autoprimaries)
 * [`purge_autoprimaries`](#-powerdns--purge_autoprimaries)
+* [`authoritative_user`](#-powerdns--authoritative_user)
 * [`authoritative_group`](#-powerdns--authoritative_group)
+* [`authoritative_file_owner`](#-powerdns--authoritative_file_owner)
+* [`authoritative_file_group`](#-powerdns--authoritative_file_group)
 
 ##### <a name="-powerdns--authoritative_package_name"></a>`authoritative_package_name`
 
@@ -203,6 +210,30 @@ Recursor config directory path
 Data type: `Stdlib::Absolutepath`
 
 Recursor config file path
+
+##### <a name="-powerdns--recursor_user"></a>`recursor_user`
+
+Data type: `String[1]`
+
+Under which user recursor is running
+
+##### <a name="-powerdns--recursor_group"></a>`recursor_group`
+
+Data type: `String[1]`
+
+Under which group recursor is running
+
+##### <a name="-powerdns--recursor_file_owner"></a>`recursor_file_owner`
+
+Data type: `String[1]`
+
+Owner of recursor config files
+
+##### <a name="-powerdns--recursor_file_group"></a>`recursor_file_group`
+
+Data type: `String[1]`
+
+Group of recursor config files
 
 ##### <a name="-powerdns--recursor_version"></a>`recursor_version`
 
@@ -482,13 +513,37 @@ Set this to true if you like to purge all autoprimaries not managed with puppet
 
 Default value: `false`
 
+##### <a name="-powerdns--authoritative_user"></a>`authoritative_user`
+
+Data type: `String[1]`
+
+Under which user the authoritative server is running
+
+Default value: `'pdns'`
+
 ##### <a name="-powerdns--authoritative_group"></a>`authoritative_group`
 
 Data type: `String[1]`
 
-This group will be set on authoritative server files.
+Under which group the authoritative server is running
 
 Default value: `'pdns'`
+
+##### <a name="-powerdns--authoritative_file_owner"></a>`authoritative_file_owner`
+
+Data type: `String[1]`
+
+Owner of authoritative config files
+
+Default value: `'root'`
+
+##### <a name="-powerdns--authoritative_file_group"></a>`authoritative_file_group`
+
+Data type: `String[1]`
+
+Group of authoritative config files
+
+Default value: `$authoritative_group`
 
 ### <a name="powerdns--authoritative"></a>`powerdns::authoritative`
 
