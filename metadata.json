@@ -1,12 +1,12 @@
 {
-  "name": "sensson-powerdns",
+  "name": "voxpupuli-powerdns",
   "version": "6.0.1-rc0",
-  "author": "sensson",
+  "author": "voxpupuli",
   "summary": "A module to install and configure PowerDNS 4.x authoritative server and recursor",
   "license": "Apache-2.0",
-  "source": "https://github.com/sensson/puppet-powerdns",
-  "project_page": "https://github.com/sensson/puppet-powerdns",
-  "issues_url": "https://github.com/sensson/puppet-powerdns/issues",
+  "source": "https://github.com/voxpupuli/puppet-powerdns",
+  "project_page": "https://github.com/voxpupuli/puppet-powerdns",
+  "issues_url": "https://github.com/voxpupuli/puppet-powerdns/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
