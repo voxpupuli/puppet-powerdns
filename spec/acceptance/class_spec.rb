@@ -46,7 +46,7 @@ describe 'powerdns class' do
     end
 
     describe command('/usr/bin/pdns_control version') do
-      its(:stdout) { is_expected.to match %r{^4\.9} }
+      its(:stdout) { is_expected.to match %r{^(4\.9|5\.\d)} }
     end
   end
 
