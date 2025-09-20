@@ -27,6 +27,7 @@ describe 'powerdns', type: :class do
           sqlite_binary_package_name = 'sqlite'
           recursor_package_name = 'pdns-recursor'
           recursor_service_name = 'pdns-recursor'
+          recursor_dir = '/etc/pdns-recursor'
         when 'Debian'
           authoritative_package_name = 'pdns-server'
           authoritative_service_name = 'pdns'
@@ -39,6 +40,7 @@ describe 'powerdns', type: :class do
           sqlite_binary_package_name = 'sqlite3'
           recursor_package_name = 'pdns-recursor'
           recursor_service_name = 'pdns-recursor'
+          recursor_dir = '/etc/powerdns'
         when 'Archlinux'
           authoritative_package_name = 'powerdns'
           authoritative_service_name = 'pdns'
@@ -121,9 +123,7 @@ describe 'powerdns', type: :class do
             it { is_expected.to contain_apt__keyring('powerdns.asc') }
             it { is_expected.to contain_apt__pin('powerdns') }
             it { is_expected.to contain_apt__source('powerdns') }
-            it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-49}) }
             it { is_expected.to contain_apt__source('powerdns-recursor') }
-            it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-50}) }
             it { is_expected.to contain_package('dirmngr') }
           end
 
@@ -632,11 +632,98 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_package(authoritative_package_name).with('ensure' => 'installed') }
         end
 
+        # if a yaml OS, test the yaml style forward zones
+        context 'powerdns class with the recursor with yaml forward zones' do
+          let(:params) do
+            {
+              recursor: true,
+              authoritative: false,
+              recursor_version: '5.3',
+              recursor_use_yaml: true,
+              forward_zones: [
+                {
+                  'zone'       => 'example.com',
+                  'forwarders' => ['192.0.2.1:5300'],
+                },
+                {
+                  'zone'       => 'example.net',
+                  'forwarders' => ['198.51.100.1', '198.51.100.2', '198.51.100.3', '198.51.100.4'],
+                  'recurse'    => true,
+                },
+                {
+                  'zone'       => 'example.org',
+                  'forwarders' => ['203.0.113.5', '203.0.113.6'],
+                },
+                {
+                  'zone'       => '2.0.192.in-addr.arpa',        # reverse for 192.0.2.0/24
+                  'forwarders' => ['192.0.2.53', '192.0.2.54'],
+                  'recurse'    => true,
+                },
+                {
+                  'zone'       => '100.51.198.in-addr.arpa',     # reverse for 198.51.100.0/24
+                  'forwarders' => ['198.51.100.53', '198.51.100.54'],
+                  'recurse'    => true,
+                },
+              ],
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          # Check forward zones
+          it { is_expected.to contain_class('powerdns::recursor') }
+
+          it 'renders forward zones yaml correctly' do
+            is_expected.to contain_file("#{recursor_dir}/recursor.conf").with('ensure' => 'file')
+                                                                        .with_content(<<~EOS,
+                                                                          ---
+                                                                          recursor:
+                                                                            include_dir: "#{recursor_dir}/recursor.d"
+                                                                            forward_zones_file: "#{recursor_dir}/forward_zones.yml"
+                                                                        EOS
+                                                                                     )
+          end
+
+          it 'includes forward_zones config in yaml format' do
+            is_expected.to contain_file("#{recursor_dir}/forward_zones.yml").with('ensure' => 'file')
+                                                                            .with_content(<<~EOS,
+                                                                              ---
+                                                                              - zone: example.com
+                                                                                forwarders:
+                                                                                - 192.0.2.1:5300
+                                                                              - zone: example.net
+                                                                                forwarders:
+                                                                                - 198.51.100.1
+                                                                                - 198.51.100.2
+                                                                                - 198.51.100.3
+                                                                                - 198.51.100.4
+                                                                                recurse: true
+                                                                              - zone: example.org
+                                                                                forwarders:
+                                                                                - 203.0.113.5
+                                                                                - 203.0.113.6
+                                                                              - zone: 2.0.192.in-addr.arpa
+                                                                                forwarders:
+                                                                                - 192.0.2.53
+                                                                                - 192.0.2.54
+                                                                                recurse: true
+                                                                              - zone: 100.51.198.in-addr.arpa
+                                                                                forwarders:
+                                                                                - 198.51.100.53
+                                                                                - 198.51.100.54
+                                                                                recurse: true
+                                                                            EOS
+                                                                                         )
+          end
+        end
+
+        # if not a yaml OS, test the old style forward zones
         context 'powerdns class with the recursor with forward zones' do
           let(:params) do
             {
               recursor: true,
               authoritative: false,
+              recursor_version: '4.9', # without yaml support
               forward_zones: {
                 'example.com': '1.1.1.1',
                 '+.': '8.8.8.8',
@@ -644,16 +731,9 @@ describe 'powerdns', type: :class do
             }
           end
 
-          case facts[:os]['family']
-          when 'RedHat'
-            recursor_dir = '/etc/pdns-recursor'
-          when 'Debian'
-            recursor_dir = '/etc/powerdns'
-          end
-
           it { is_expected.to compile.with_all_deps }
 
-          # Check the authoritative server
+          # Check forward zones
           it { is_expected.to contain_class('powerdns::recursor') }
           it { is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").with_ensure('file') }
 

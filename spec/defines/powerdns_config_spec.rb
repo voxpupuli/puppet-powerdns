@@ -5,6 +5,7 @@ override_facts = {
 }
 
 require 'spec_helper'
+
 describe 'powerdns::config' do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
@@ -18,11 +19,14 @@ describe 'powerdns::config' do
         end
 
         let(:pre_condition) do
-          'class { "::powerdns":
+          'class { "powerdns":
             db_root_password => "foobar",
             db_username => "foo",
             db_password => "bar",
             recursor => true,
+            recursor_use_yaml => false,  # <- force INI mode
+            authoritative_version => "4.9",
+            recursor_version => "5.0",
           }'
         end
 
@@ -53,15 +57,12 @@ describe 'powerdns::config' do
         end
 
         context 'powerdns::config with recursor type' do
-          let(:params) do
-            {
-              setting: 'foo',
-              value: 'bar',
-              type: 'recursor',
-            }
-          end
+          let(:params) { { setting: 'foo', value: 'bar', type: 'recursor' } }
 
-          it { is_expected.to contain_file_line(format('powerdns-config-foo-%{config}', config: recursor_config)) }
+          it do
+            # Only assert in INI mode
+            is_expected.to contain_file_line("powerdns-config-foo-#{recursor_config}") unless catalogue.resource('Class', 'Powerdns')[:recursor_use_yaml]
+          end
         end
 
         context 'powerdns::config with integers' do
