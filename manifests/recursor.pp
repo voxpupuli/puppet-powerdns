@@ -58,13 +58,6 @@ class powerdns::recursor (
     }
   } else {
     ## Use Old INI based configuration
-    file { $powerdns::recursor_config_includedir:
-      ensure  => directory,
-      owner   => $powerdns::recursor_file_owner,
-      group   => $powerdns::recursor_file_group,
-      require => Package[$powerdns::recursor_package_name],
-    }
-
     file { $powerdns::recursor_config:
       ensure       => file,
       owner        => $powerdns::recursor_file_owner,
@@ -75,27 +68,19 @@ class powerdns::recursor (
       require      => Package[$powerdns::recursor_package_name],
       notify       => Service['pdns-recursor'],
     }
+    if !empty($forward_zones) {
+      $zone_config = "${powerdns::recursor_configdir}/forward_zones.conf"
+      file { $zone_config:
+        ensure  => file,
+        owner   => $powerdns::recursor_file_owner,
+        group   => $powerdns::recursor_file_group,
+        content => template('powerdns/forward_zones.conf.erb'),
+        notify  => Service['pdns-recursor'],
+      }
 
-    file { $powerdns::recursor_local_config_file:
-      ensure       => file,
-      owner        => $powerdns::recursor_file_owner,
-      group        => $powerdns::recursor_file_group,
-      content      => to_yaml(
-        'recursor' => lookup('powerdns::recursor::local_config', Hash, 'deep', {})
-      ),
-      require      => Package[$powerdns::recursor_package_name],
-      notify       => Service['pdns-recursor'],
-    }
-
-    if !empty($powerdns::recursor_forward_zones) {
-      file { $powerdns::recursor_forward_zones_file:
-        ensure       => file,
-        owner        => $powerdns::recursor_file_owner,
-        group        => $powerdns::recursor_file_group,
-        content      => to_yaml(
-          'recursor' => { 'forward-zones' => $forward_zones }
-        ),
-        notify       => Service['pdns-recursor'],
+      powerdns::config { 'forward-zones-file':
+        value => $zone_config,
+        type  => 'recursor',
       }
     }
   }

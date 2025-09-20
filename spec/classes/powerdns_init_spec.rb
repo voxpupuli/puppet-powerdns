@@ -5,6 +5,14 @@ override_facts = {
   service_provider: 'systemd'
 }
 
+def yaml_os?(facts)
+  return false unless facts[:os]['family'] == 'Debian'
+
+  (facts[:os]['name'] == 'Debian' && facts[:os]['release']['major'].to_i >= 12) ||
+    (facts[:os]['name'] == 'Ubuntu' && %w[22.04 24.04].include?(facts[:os]['release']['full']))
+end
+
+
 require 'spec_helper'
 describe 'powerdns', type: :class do
   context 'supported operating systems' do
@@ -121,9 +129,18 @@ describe 'powerdns', type: :class do
             it { is_expected.to contain_apt__key('powerdns') }
             it { is_expected.to contain_apt__pin('powerdns') }
             it { is_expected.to contain_apt__source('powerdns') }
-            it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-49}) }
+            case facts[:os]['release']['major']
+            when '13'
+            when '12'
+            when '22.04'
+            when '24.04'
+              it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-50}) }
+              it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-53}) }
+            else
+                it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-49}) }
+                it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-50}) }
+            end
             it { is_expected.to contain_apt__source('powerdns-recursor') }
-            it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-50}) }
             it { is_expected.to contain_package('dirmngr') }
           end
 
@@ -632,40 +649,96 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_package(authoritative_package_name).with('ensure' => 'installed') }
         end
 
-        context 'powerdns class with the recursor with forward zones' do
-          let(:params) do
-            {
-              recursor: true,
-              authoritative: false,
-              forward_zones: {
-                'example.com': '1.1.1.1',
-                '+.': '8.8.8.8'
+        if (yaml_os?(facts))
+          # if a yaml OS, test the yaml style forward zones
+          context 'powerdns class with the recursor with yaml forward zones' do
+            let(:params) do
+              {
+                recursor: true,
+                authoritative: false,
+                recursor_forward_zones: [
+                  {
+                    'zone'       => 'example.com',
+                    'forwarders' => ['192.0.2.1:5300'],
+                  },
+                  {
+                    'zone'       => 'example.net',
+                    'forwarders' => ['198.51.100.1', '198.51.100.2', '198.51.100.3', '198.51.100.4'],
+                    'recurse'    => true,
+                  },
+                  {
+                    'zone'       => 'example.org',
+                    'forwarders' => ['203.0.113.5', '203.0.113.6'],
+                  },
+                  {
+                    'zone'       => '2.0.192.in-addr.arpa',        # reverse for 192.0.2.0/24
+                    'forwarders' => ['192.0.2.53', '192.0.2.54'],
+                    'recurse'    => true,
+                  },
+                  {
+                    'zone'       => '100.51.198.in-addr.arpa',     # reverse for 198.51.100.0/24
+                    'forwarders' => ['198.51.100.53', '198.51.100.54'],
+                    'recurse'    => true,
+                  },
+                ]
               }
+            end
+
+            case facts[:os]['family']
+            when 'RedHat'
+              recursor_dir = '/etc/pdns-recursor'
+            when 'Debian'
+              recursor_dir = '/etc/powerdns'
+            end
+
+            it { is_expected.to compile.with_all_deps }
+
+            # Check forward zones
+            it { is_expected.to contain_class('powerdns::recursor') }
+            it { is_expected.to contain_file("#{recursor_dir}/forward-zones.yml").with_ensure('file') }
+
+            it 'renders forward zones yaml correctly' do
+              expect(catalogue.resource('File', "#{recursor_dir}/forward-zones.yml")[:content])
+                .to include(params[:recursor_forward_zones].to_yaml.strip)
+            end
+          end
+        else
+          # if not a yaml OS, test the old style forward zones
+          context 'powerdns class with the recursor with forward zones' do
+            let(:params) do
+              {
+                recursor: true,
+                authoritative: false,
+                forward_zones: {
+                  'example.com': '1.1.1.1',
+                  '+.': '8.8.8.8'
+                }
+              }
+            end
+
+            case facts[:os]['family']
+            when 'RedHat'
+              recursor_dir = '/etc/pdns-recursor'
+            when 'Debian'
+              recursor_dir = '/etc/powerdns'
+            end
+
+            it { is_expected.to compile.with_all_deps }
+
+            # Check forward zones
+            it { is_expected.to contain_class('powerdns::recursor') }
+            it { is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").with_ensure('file') }
+
+            it {
+              is_expected.to contain_powerdns__config('forward-zones-file').
+                with(value: "#{recursor_dir}/forward_zones.conf")
+            }
+
+            it {
+              is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").
+                with_content(%r{^example.com=1.1.1.1})
             }
           end
-
-          case facts[:os]['family']
-          when 'RedHat'
-            recursor_dir = '/etc/pdns-recursor'
-          when 'Debian'
-            recursor_dir = '/etc/powerdns'
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          # Check the authoritative server
-          it { is_expected.to contain_class('powerdns::recursor') }
-          it { is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").with_ensure('file') }
-
-          it {
-            is_expected.to contain_powerdns__config('forward-zones-file').
-              with(value: "#{recursor_dir}/forward_zones.conf")
-          }
-
-          it {
-            is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").
-              with_content(%r{^example.com=1.1.1.1})
-          }
         end
       end
     end
