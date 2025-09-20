@@ -58,16 +58,14 @@ class powerdns::recursor (
     }
   } else {
     ## Use Old INI based configuration
+
     file { $powerdns::recursor_config:
-      ensure       => file,
-      owner        => $powerdns::recursor_file_owner,
-      group        => $powerdns::recursor_file_group,
-      content      => to_yaml(
-        'recursor' => { 'include_dir' => $powerdns::recursor_config_includedir }
-      ),
-      require      => Package[$powerdns::recursor_package_name],
-      notify       => Service['pdns-recursor'],
+      ensure  => file,
+      owner   => $powerdns::recursor_file_owner,
+      group   => $powerdns::recursor_file_group,
+      require => Package[$powerdns::recursor_package_name],
     }
+
     if !empty($forward_zones) {
       $zone_config = "${powerdns::recursor_configdir}/forward_zones.conf"
       file { $zone_config:
