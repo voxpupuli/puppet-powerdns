@@ -107,6 +107,12 @@ The following parameters are available in the `powerdns` class:
 * [`authoritative_group`](#-powerdns--authoritative_group)
 * [`authoritative_file_owner`](#-powerdns--authoritative_file_owner)
 * [`authoritative_file_group`](#-powerdns--authoritative_file_group)
+* [`recursor_config_includedir`](#-powerdns--recursor_config_includedir)
+* [`recursor_forward_zones_file`](#-powerdns--recursor_forward_zones_file)
+* [`recursor_local_config_file`](#-powerdns--recursor_local_config_file)
+* [`recursor_use_yaml`](#-powerdns--recursor_use_yaml)
+* [`recursor_local_config`](#-powerdns--recursor_local_config)
+* [`recursor_forward_zones`](#-powerdns--recursor_forward_zones)
 
 ##### <a name="-powerdns--authoritative_package_name"></a>`authoritative_package_name`
 
@@ -152,7 +158,7 @@ Authoritative config file path
 
 ##### <a name="-powerdns--authoritative_version"></a>`authoritative_version`
 
-Data type: `Pattern[/4\.[0-9]+/]`
+Data type: `Pattern[/[4,5]\.[0-9]+/]`
 
 Authoritative server version
 
@@ -544,6 +550,48 @@ Data type: `String[1]`
 Group of authoritative config files
 
 Default value: `$authoritative_group`
+
+##### <a name="-powerdns--recursor_config_includedir"></a>`recursor_config_includedir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-powerdns--recursor_forward_zones_file"></a>`recursor_forward_zones_file`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-powerdns--recursor_local_config_file"></a>`recursor_local_config_file`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-powerdns--recursor_use_yaml"></a>`recursor_use_yaml`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### <a name="-powerdns--recursor_local_config"></a>`recursor_local_config`
+
+Data type: `Optional[Hash]`
+
+
+
+Default value: `undef`
+
+##### <a name="-powerdns--recursor_forward_zones"></a>`recursor_forward_zones`
+
+Data type: `Optional[Tuple]`
+
+
+
+Default value: `undef`
 
 ### <a name="powerdns--authoritative"></a>`powerdns::authoritative`
 
