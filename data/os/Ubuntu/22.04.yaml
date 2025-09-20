@@ -1,0 +1,8 @@
+---
+powerdns::authoritative_version: "5.0"
+powerdns::recursor_version: "5.3"
+powerdns::recursor_use_yaml: true
+powerdns::recursor_config: "%{lookup('powerdns::recursor_configdir')}/recursor.yml"
+powerdns::recursor_config_includedir: "%{lookup('powerdns::recursor_configdir')}/recursor.d"
+powerdns::recursor_forward_zones_file: "%{lookup('powerdns::recursor_configdir')}/forward-zones.yml"
+powerdns::recursor_local_config_file: "%{lookup('powerdns::recursor_config_includedir')}/00-local.yml"

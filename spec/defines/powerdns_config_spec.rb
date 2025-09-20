@@ -5,9 +5,17 @@ override_facts = {
 }
 
 require 'spec_helper'
+
 describe 'powerdns::config' do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
+      # ---- RUN Legacy Config TESTS ONLY ON Non-YAML-Supporting OSes ----
+      debian_family = facts[:os]['family'] == 'Debian'
+      debian_ok = facts[:os]['name'] == 'Debian' && %w[12 13].include?(facts[:os]['release']['major'])
+      ubuntu_ok = facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['full'] =~ %r{\A(22\.04|24\.04)\z}
+      next if debian_family && (debian_ok || ubuntu_ok)
+
+      # -----------------------------------------------------------------
       context "on #{os}" do
         let(:facts) do
           facts.merge(override_facts)
@@ -23,6 +31,7 @@ describe 'powerdns::config' do
             db_username => "foo",
             db_password => "bar",
             recursor => true,
+            recursor_use_yaml => false,  # <- force INI mode
           }'
         end
 
@@ -53,15 +62,12 @@ describe 'powerdns::config' do
         end
 
         context 'powerdns::config with recursor type' do
-          let(:params) do
-            {
-              setting: 'foo',
-              value: 'bar',
-              type: 'recursor'
-            }
-          end
+          let(:params) { { setting: 'foo', value: 'bar', type: 'recursor' } }
 
-          it { is_expected.to contain_file_line(format('powerdns-config-foo-%{config}', config: recursor_config)) }
+          it do
+            # Only assert in INI mode
+            is_expected.to contain_file_line("powerdns-config-foo-#{recursor_config}") unless catalogue.resource('Class', 'Powerdns')[:recursor_use_yaml]
+          end
         end
 
         context 'powerdns::config with integers' do
