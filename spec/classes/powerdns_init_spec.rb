@@ -12,7 +12,6 @@ def yaml_os?(facts)
     (facts[:os]['name'] == 'Ubuntu' && %w[22.04 24.04].include?(facts[:os]['release']['full']))
 end
 
-
 require 'spec_helper'
 describe 'powerdns', type: :class do
   context 'supported operating systems' do
@@ -129,16 +128,14 @@ describe 'powerdns', type: :class do
             it { is_expected.to contain_apt__key('powerdns') }
             it { is_expected.to contain_apt__pin('powerdns') }
             it { is_expected.to contain_apt__source('powerdns') }
+
             case facts[:os]['release']['major']
-            when '13'
-            when '12'
-            when '22.04'
-            when '24.04'
+            when '12', '13', '22.04', '24.04'
               it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-50}) }
               it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-53}) }
             else
-                it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-49}) }
-                it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-50}) }
+              it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-49}) }
+              it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-50}) }
             end
             it { is_expected.to contain_apt__source('powerdns-recursor') }
             it { is_expected.to contain_package('dirmngr') }
@@ -649,7 +646,7 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_package(authoritative_package_name).with('ensure' => 'installed') }
         end
 
-        if (yaml_os?(facts))
+        if yaml_os?(facts)
           # if a yaml OS, test the yaml style forward zones
           context 'powerdns class with the recursor with yaml forward zones' do
             let(:params) do
@@ -698,8 +695,8 @@ describe 'powerdns', type: :class do
             it { is_expected.to contain_file("#{recursor_dir}/forward-zones.yml").with_ensure('file') }
 
             it 'renders forward zones yaml correctly' do
-              expect(catalogue.resource('File', "#{recursor_dir}/forward-zones.yml")[:content])
-                .to include(params[:recursor_forward_zones].to_yaml.strip)
+              expect(catalogue.resource('File', "#{recursor_dir}/forward-zones.yml")[:content]).
+                to include(params[:recursor_forward_zones].to_yaml.strip)
             end
           end
         else

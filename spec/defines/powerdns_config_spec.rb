@@ -14,6 +14,7 @@ describe 'powerdns::config' do
       debian_ok = facts[:os]['name'] == 'Debian' && %w[12 13].include?(facts[:os]['release']['major'])
       ubuntu_ok = facts[:os]['name'] == 'Ubuntu' && facts[:os]['release']['full'] =~ %r{\A(22\.04|24\.04)\z}
       next if debian_family && (debian_ok || ubuntu_ok)
+
       # -----------------------------------------------------------------
       context "on #{os}" do
         let(:facts) do
@@ -65,9 +66,7 @@ describe 'powerdns::config' do
 
           it do
             # Only assert in INI mode
-            if !catalogue.resource('Class', 'Powerdns')[:recursor_use_yaml]
-              is_expected.to contain_file_line("powerdns-config-foo-#{recursor_config}")
-            end
+            is_expected.to contain_file_line("powerdns-config-foo-#{recursor_config}") unless catalogue.resource('Class', 'Powerdns')[:recursor_use_yaml]
           end
         end
 
