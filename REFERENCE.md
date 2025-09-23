@@ -942,7 +942,7 @@ Alias of
 
 ```puppet
 Hash[Pattern[/.+@.+/], Struct[{
-      account => Optional[String],
+    account => Optional[String],
   }]]
 ```
 
