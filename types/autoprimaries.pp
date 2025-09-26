@@ -2,6 +2,6 @@
 type Powerdns::Autoprimaries=Hash[
   Pattern[/.+@.+/],
   Struct[{
-      account => Optional[String],
+    account => Optional[String],
   }]
 ]
