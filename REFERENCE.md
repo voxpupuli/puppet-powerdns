@@ -152,7 +152,7 @@ Authoritative config file path
 
 ##### <a name="-powerdns--authoritative_version"></a>`authoritative_version`
 
-Data type: `Pattern[/4\.[0-9]+/]`
+Data type: `Pattern[/[4,5]\.[0-9]+/]`
 
 Authoritative server version
 

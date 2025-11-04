@@ -132,7 +132,7 @@ class powerdns (
   String[1] $authoritative_service_name,
   Stdlib::Absolutepath $authoritative_configdir,
   Stdlib::Absolutepath $authoritative_config,
-  Pattern[/4\.[0-9]+/] $authoritative_version,
+  Pattern[/[4,5]\.[0-9]+/] $authoritative_version,
   Stdlib::Absolutepath $db_file,
   Stdlib::Absolutepath $mysql_schema_file,
   Stdlib::Absolutepath $pgsql_schema_file,
