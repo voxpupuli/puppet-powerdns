@@ -28,7 +28,7 @@ class powerdns::recursor (
         ensure  => file,
         owner   => $powerdns::recursor_file_owner,
         group   => $powerdns::recursor_file_group,
-        content => to_yaml($powerdns::recursor_forward_zones),
+        content => stdlib::to_yaml($powerdns::recursor_forward_zones),
         notify  => Service['pdns-recursor'],
       }
     }
@@ -43,7 +43,7 @@ class powerdns::recursor (
       ensure  => file,
       owner   => $powerdns::recursor_file_owner,
       group   => $powerdns::recursor_file_group,
-      content => to_yaml($recursor_config),
+      content => stdlib::to_yaml($recursor_config),
       require => Package[$powerdns::recursor_package_name],
       notify  => Service['pdns-recursor'],
     }
@@ -52,7 +52,7 @@ class powerdns::recursor (
       ensure  => file,
       owner   => $powerdns::recursor_file_owner,
       group   => $powerdns::recursor_file_group,
-      content => to_yaml(lookup('powerdns::recursor_local_config', Data, 'deep', {})),
+      content => stdlib::to_yaml(lookup('powerdns::recursor_local_config', Data, 'deep', {})),
       require => Package[$powerdns::recursor_package_name],
       notify  => Service['pdns-recursor'],
     }
