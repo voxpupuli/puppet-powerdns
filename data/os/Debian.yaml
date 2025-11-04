@@ -13,7 +13,6 @@ powerdns::authoritative_package_name: pdns-server
 powerdns::authoritative_extra_packages:
   - dirmngr
 powerdns::authoritative_service_name: pdns
-powerdns::authoritative_file_owner: pdns
 powerdns::authoritative_configdir: /etc/powerdns
 powerdns::authoritative_config: "%{lookup('powerdns::authoritative_configdir')}/pdns.conf"
 powerdns::recursor_configdir: /etc/powerdns

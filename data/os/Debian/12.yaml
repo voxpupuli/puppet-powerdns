@@ -1,6 +1,6 @@
 ---
-powerdns::mysql_charset: utf8
-powerdns::mysql_collate: utf8_general_ci
+powerdns::mysql_charset: utf8mb3
+powerdns::mysql_collate: utf8mb3_general_ci
 powerdns::authoritative_version: "5.0"
 powerdns::recursor_version: "5.3"
 powerdns::recursor_use_yaml: true
