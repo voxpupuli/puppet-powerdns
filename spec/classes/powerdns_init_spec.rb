@@ -125,7 +125,7 @@ describe 'powerdns', type: :class do
           end
           case facts[:os]['family']
           when 'Debian'
-            it { is_expected.to contain_apt__key('powerdns') }
+            it { is_expected.to contain_apt__keyring('powerdns.asc') }
             it { is_expected.to contain_apt__pin('powerdns') }
             it { is_expected.to contain_apt__source('powerdns') }
 

@@ -43,9 +43,8 @@ class powerdns::repo inherits powerdns {
 
       $os = downcase($facts['os']['name'])
 
-      apt::key { 'powerdns':
+      apt::keyring { 'powerdns.asc':
         ensure => present,
-        id     => '9FAAA5577E8FCF62093D036C1B0C6205FD380FBB',
         source => 'https://repo.powerdns.com/FD380FBB-pub.asc',
       }
 
@@ -56,7 +55,8 @@ class powerdns::repo inherits powerdns {
         repos        => 'main',
         release      => $auth_release,
         architecture => 'amd64',
-        require      => Apt::Key['powerdns'],
+        keyring      => '/etc/apt/keyrings/powerdns.asc',
+        require      => Apt::Keyring['powerdns.asc'],
       }
 
       $rec_release = "${facts['os']['distro']['codename']}-rec-${recursor_short_version}"
@@ -66,6 +66,7 @@ class powerdns::repo inherits powerdns {
         repos        => 'main',
         release      => $rec_release,
         architecture => 'amd64',
+        keyring      => '/etc/apt/keyrings/powerdns.asc',
         require      => Apt::Source['powerdns'],
       }
 
