@@ -1,12 +1,12 @@
 ---
 fixtures:
-  repositories:
-    apt: https://github.com/puppetlabs/puppetlabs-apt.git
-    augeas_core: https://github.com/puppetlabs/puppetlabs-augeas_core.git
-    concat: https://github.com/puppetlabs/puppetlabs-concat.git
-    epel: https://github.com/voxpupuli/puppet-epel.git
-    mysql: https://github.com/puppetlabs/puppetlabs-mysql.git
-    postgresql: https://github.com/puppetlabs/puppetlabs-postgresql.git
-    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
-    systemd: https://github.com/voxpupuli/puppet-systemd
-    yumrepo_core: https://github.com/puppetlabs/puppetlabs-yumrepo_core.git
+  forge_modules:
+    apt: "puppetlabs/apt"
+    augeas_core: "puppetlabs/augeas_core"
+    concat: "puppetlabs/concat"
+    epel: "puppet/epel"
+    mysql: "puppetlabs/mysql"
+    stdlib: "puppetlabs/stdlib"
+    postgresql: "puppetlabs/postgresql"
+    systemd: "puppet/systemd"
+    yumrepo_core: "puppetlabs/yumrepo_core"
