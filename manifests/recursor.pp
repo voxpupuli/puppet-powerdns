@@ -2,9 +2,12 @@
 #
 # @param forward_zones
 #   Hash containing zone => dns servers pairs
+# @param config recursor config (will be converted to YAML, see https://doc.powerdns.com/recursor/yamlsettings.html)
+#   when powerdns::recursor_use_yaml is set to `true`
 #
 class powerdns::recursor (
   Hash $forward_zones = $powerdns::forward_zones,
+  Hash $config = {},
 ) inherits powerdns {
   package { $powerdns::recursor_package_name:
     ensure => $powerdns::recursor_package_ensure,
@@ -20,7 +23,7 @@ class powerdns::recursor (
     $recursor_config = {
       'recursor' => {
         'include_dir' => $powerdns::recursor_config_includedir,
-      } + $forward_block,
+      } + $forward_block + $config,
     }
 
     if !empty($powerdns::recursor_forward_zones) {

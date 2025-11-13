@@ -19,7 +19,7 @@ describe 'powerdns::config', type: :define do
         rec_dir = '/etc/powerdns' # YAML OSes here are all Debian-family
         {
           rec_dir: rec_dir,
-          recursor_config: File.join(rec_dir, 'recursor.yml'),
+          recursor_config: File.join(rec_dir, 'recursor.conf'),
           authoritative_config: File.join(rec_dir, 'pdns.conf'),
         }
       end

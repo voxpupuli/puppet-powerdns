@@ -1,4 +1,5 @@
-# @summary Manage powerdns settings
+# @summary Manage powerdns settings in old format, see https://doc.powerdns.com/recursor/settings.html
+#   Supported up to recursor version 5.2.
 #
 # @param setting
 #   The setting you want to change

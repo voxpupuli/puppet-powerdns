@@ -19,7 +19,8 @@
 
 ### Defined types
 
-* [`powerdns::config`](#powerdns--config): Manage powerdns settings
+* [`powerdns::config`](#powerdns--config): Manage powerdns settings in old format, see https://doc.powerdns.com/recursor/settings.html
+Supported up to recursor version 5.2.
 
 ### Resource types
 
@@ -636,6 +637,7 @@ powerdns recursor
 The following parameters are available in the `powerdns::recursor` class:
 
 * [`forward_zones`](#-powerdns--recursor--forward_zones)
+* [`config`](#-powerdns--recursor--config)
 
 ##### <a name="-powerdns--recursor--forward_zones"></a>`forward_zones`
 
@@ -645,6 +647,15 @@ Hash containing zone => dns servers pairs
 
 Default value: `$powerdns::forward_zones`
 
+##### <a name="-powerdns--recursor--config"></a>`config`
+
+Data type: `Hash`
+
+recursor config (will be converted to YAML, see https://doc.powerdns.com/recursor/yamlsettings.html)
+when powerdns::recursor_use_yaml is set to `true`
+
+Default value: `{}`
+
 ### <a name="powerdns--repo"></a>`powerdns::repo`
 
 powerdns::repo
@@ -653,7 +664,8 @@ powerdns::repo
 
 ### <a name="powerdns--config"></a>`powerdns::config`
 
-Manage powerdns settings
+Manage powerdns settings in old format, see https://doc.powerdns.com/recursor/settings.html
+Supported up to recursor version 5.2.
 
 #### Parameters
 
