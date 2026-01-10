@@ -27,7 +27,7 @@ Puppet::Type.newtype(:powerdns_record) do
          "
     defaultto { @resource[:name].split('.')[0] }
     validate do |value|
-      raise ArgumentError, 'target_zone needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'rname needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -35,7 +35,7 @@ Puppet::Type.newtype(:powerdns_record) do
     desc "the class of record (defaults to 'IN')"
     defaultto 'IN'
     validate do |value|
-      raise ArgumentError, 'target_zone needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'rclass needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -43,7 +43,7 @@ Puppet::Type.newtype(:powerdns_record) do
     desc 'the record type'
     defaultto 'A'
     validate do |value|
-      raise ArgumentError, 'target_zone needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'rtype needs to be a string' unless value.is_a?(String)
     end
   end
 
@@ -51,7 +51,7 @@ Puppet::Type.newtype(:powerdns_record) do
     desc 'the ttl of the record'
     defaultto '3600'
     validate do |value|
-      raise ArgumentError, 'target_zone needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'rttl needs to be a string' unless value.is_a?(String)
     end
   end
 
