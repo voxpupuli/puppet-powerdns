@@ -23,7 +23,7 @@ Puppet::Type.newtype(:powerdns_autoprimary) do
     defaultto ''
 
     validate do |value|
-      raise ArgumentError, 'ip needs to be a string' unless value.is_a?(String)
+      raise ArgumentError, 'account needs to be a string' unless value.is_a?(String)
     end
   end
 
