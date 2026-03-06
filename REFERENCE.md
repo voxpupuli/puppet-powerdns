@@ -120,6 +120,8 @@ Data type: `String[1]`
 
 Authoritative server ensure property
 
+Default value: `'installed'`
+
 ##### <a name="-powerdns--authoritative_extra_packages"></a>`authoritative_extra_packages`
 
 Data type: `Optional[Array[String[1]]]`
@@ -131,6 +133,8 @@ Extra packages to install with the authoritative server
 Data type: `String[1]`
 
 Authoritative server extra packages ensure property
+
+Default value: `'installed'`
 
 ##### <a name="-powerdns--authoritative_service_name"></a>`authoritative_service_name`
 
@@ -155,6 +159,8 @@ Authoritative config file path
 Data type: `Pattern[/4\.[0-9]+/]`
 
 Authoritative server version
+
+Default value: `'4.9'`
 
 ##### <a name="-powerdns--db_file"></a>`db_file`
 
@@ -193,6 +199,8 @@ Data type: `String[1]`
 
 Recursor package ensure property
 
+Default value: `'installed'`
+
 ##### <a name="-powerdns--recursor_service_name"></a>`recursor_service_name`
 
 Data type: `String[1]`
@@ -217,11 +225,15 @@ Data type: `String[1]`
 
 Under which user recursor is running
 
+Default value: `'pdns'`
+
 ##### <a name="-powerdns--recursor_group"></a>`recursor_group`
 
 Data type: `String[1]`
 
 Under which group recursor is running
+
+Default value: `'pdns'`
 
 ##### <a name="-powerdns--recursor_file_owner"></a>`recursor_file_owner`
 
@@ -229,17 +241,23 @@ Data type: `String[1]`
 
 Owner of recursor config files
 
+Default value: `'root'`
+
 ##### <a name="-powerdns--recursor_file_group"></a>`recursor_file_group`
 
 Data type: `String[1]`
 
 Group of recursor config files
 
+Default value: `'%{lookup('powerdns::recursor_group')}'`
+
 ##### <a name="-powerdns--recursor_version"></a>`recursor_version`
 
 Data type: `Pattern[/[4,5]\.[0-9]+/]`
 
 Recursor version
+
+Default value: `'5.0'`
 
 ##### <a name="-powerdns--sqlite_package_name"></a>`sqlite_package_name`
 
@@ -889,7 +907,6 @@ The following parameters are available in the `powerdns_zone_private` type.
 * [`config_name`](#-powerdns_zone_private--config_name)
 * [`manage_records`](#-powerdns_zone_private--manage_records)
 * [`name`](#-powerdns_zone_private--name)
-* [`provider`](#-powerdns_zone_private--provider)
 * [`show_diff`](#-powerdns_zone_private--show_diff)
 
 ##### <a name="-powerdns_zone_private--config_dir"></a>`config_dir`
@@ -917,11 +934,6 @@ Default value: `true`
 namevar
 
 name of the zone name as namevar
-
-##### <a name="-powerdns_zone_private--provider"></a>`provider`
-
-The specific backend to use for this `powerdns_zone_private` resource. You will seldom need to specify this --- Puppet
-will usually discover the appropriate provider for your platform.
 
 ##### <a name="-powerdns_zone_private--show_diff"></a>`show_diff`
 
