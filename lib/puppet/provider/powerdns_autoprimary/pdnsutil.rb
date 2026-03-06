@@ -7,7 +7,7 @@ Puppet::Type.type(:powerdns_autoprimary).provide(:pdnsutil) do
   commands pdnsutil: 'pdnsutil'
 
   def initialize(value = {})
-    super(value)
+    super
     @property_flush = {}
   end
 
@@ -18,7 +18,7 @@ Puppet::Type.type(:powerdns_autoprimary).provide(:pdnsutil) do
       new(
         ensure: :present,
         name: "#{Regexp.last_match(1)}@#{Regexp.last_match(2)}",
-        account: Regexp.last_match(3)
+        account: Regexp.last_match(3),
       )
     end
   end

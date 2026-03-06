@@ -2,7 +2,7 @@
 
 override_facts = {
   root_home: '/root',
-  service_provider: 'systemd'
+  service_provider: 'systemd',
 }
 
 require 'spec_helper'
@@ -54,7 +54,7 @@ describe 'powerdns', type: :class do
         context 'powerdns class without parameters' do
           it {
             is_expected.to raise_error(
-              %r{'db_password' must be a non-empty string when 'authoritative' == true}
+              %r{'db_password' must be a non-empty string when 'authoritative' == true},
             )
           }
         end
@@ -62,13 +62,13 @@ describe 'powerdns', type: :class do
         context 'powerdns class with require_db_password at false' do
           let :params do
             {
-              require_db_password: false
+              require_db_password: false,
             }
           end
 
           it {
             is_expected.to raise_error(
-              %r{On MySQL 'db_root_password' must be a non-empty string when 'backend_create_tables' == true}
+              %r{On MySQL 'db_root_password' must be a non-empty string when 'backend_create_tables' == true},
             )
           }
         end
@@ -77,7 +77,7 @@ describe 'powerdns', type: :class do
           let :params do
             {
               require_db_password: false,
-              backend: 'postgresql'
+              backend: 'postgresql',
             }
           end
 
@@ -89,7 +89,7 @@ describe 'powerdns', type: :class do
           let :params do
             {
               require_db_password: false,
-              backend_create_tables: false
+              backend_create_tables: false,
             }
           end
 
@@ -102,7 +102,7 @@ describe 'powerdns', type: :class do
             {
               db_root_password: 'foobar',
               db_username: 'foo',
-              db_password: 'bar'
+              db_password: 'bar',
             }
           end
 
@@ -139,7 +139,7 @@ describe 'powerdns', type: :class do
             is_expected.to contain_file(authoritative_config).with(
               ensure: 'file',
               owner: 'root',
-              mode: '0640'
+              mode: '0640',
             ).that_comes_before('Service[pdns]')
           end
 
@@ -151,7 +151,7 @@ describe 'powerdns', type: :class do
             {
               db_root_password: 'foobar',
               db_username: 'foo',
-              db_password: 'bar'
+              db_password: 'bar',
             }
           end
 
@@ -169,7 +169,7 @@ describe 'powerdns', type: :class do
               db_root_password: 'foobar',
               db_username: 'foo',
               db_password: 'bar',
-              custom_epel: true
+              custom_epel: true,
             }
           end
 
@@ -188,7 +188,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               recursor_version: '4.0',
-              authoritative_version: '4.0'
+              authoritative_version: '4.0',
             }
           end
 
@@ -212,7 +212,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               db_port: 3307,
-              backend: 'mysql'
+              backend: 'mysql',
             }
           end
 
@@ -244,7 +244,7 @@ describe 'powerdns', type: :class do
               db_root_password: 'foobar',
               db_username: 'foo',
               db_password: 'bar',
-              backend: 'postgresql'
+              backend: 'postgresql',
             }
           end
 
@@ -275,7 +275,7 @@ describe 'powerdns', type: :class do
           let(:params) do
             {
               db_file: '/var/lib/powerdns/db.sqlite3',
-              backend: 'sqlite'
+              backend: 'sqlite',
             }
           end
 
@@ -290,7 +290,7 @@ describe 'powerdns', type: :class do
               'ensure' => 'file',
               'owner' => 'root',
               'group' => 'pdns',
-              'mode' => '0644'
+              'mode' => '0644',
             )
           end
 
@@ -299,13 +299,13 @@ describe 'powerdns', type: :class do
               'ensure' => 'directory',
               'owner' => 'root',
               'group' => 'pdns',
-              'mode' => '0755'
+              'mode' => '0755',
             )
           end
 
           it do
             is_expected.to contain_exec('powerdns-sqlite3-create-tables').with(
-              'command' => "/usr/bin/env sqlite3 /var/lib/powerdns/db.sqlite3 < #{sqlite_schema_file}"
+              'command' => "/usr/bin/env sqlite3 /var/lib/powerdns/db.sqlite3 < #{sqlite_schema_file}",
             )
           end
 
@@ -318,7 +318,7 @@ describe 'powerdns', type: :class do
         context 'powerdns class with bind backend' do
           let(:params) do
             {
-              backend: 'bind'
+              backend: 'bind',
             }
           end
 
@@ -353,7 +353,7 @@ describe 'powerdns', type: :class do
                 ldap_secret: 'bar',
                 backend: 'ldap',
                 backend_install: false,
-                backend_create_tables: false
+                backend_create_tables: false,
               }
             end
 
@@ -384,7 +384,7 @@ describe 'powerdns', type: :class do
                 ldap_secret: sensitive('secret_bar'),
                 backend: 'ldap',
                 backend_install: false,
-                backend_create_tables: false
+                backend_create_tables: false,
               }
             end
 
@@ -399,7 +399,7 @@ describe 'powerdns', type: :class do
                 ldap_secret: 'bar',
                 backend: 'ldap',
                 backend_install: true,
-                backend_create_tables: false
+                backend_create_tables: false,
               }
             end
 
@@ -416,7 +416,7 @@ describe 'powerdns', type: :class do
                 ldap_secret: 'bar',
                 backend: 'ldap',
                 backend_install: false,
-                backend_create_tables: true
+                backend_create_tables: true,
               }
             end
 
@@ -435,7 +435,7 @@ describe 'powerdns', type: :class do
               lmdb_shards: 2,
               lmdb_sync_mode: 'nosync',
               backend_install: false,
-              backend_create_tables: false
+              backend_create_tables: false,
             }
           end
 
@@ -461,7 +461,7 @@ describe 'powerdns', type: :class do
             let(:params) do
               {
                 backend: 'lmdb',
-                backend_install: true
+                backend_install: true,
               }
             end
 
@@ -476,7 +476,7 @@ describe 'powerdns', type: :class do
               {
                 backend: 'lmdb',
                 backend_install: false,
-                backend_create_tables: true
+                backend_create_tables: true,
               }
             end
 
@@ -493,7 +493,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               backend: 'mysql',
-              backend_create_tables: false
+              backend_create_tables: false,
             }
           end
 
@@ -516,7 +516,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: sensitive('TopSecret'),
               backend: 'mysql',
-              backend_create_tables: true
+              backend_create_tables: true,
             }
           end
 
@@ -530,7 +530,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: sensitive('TopSecret'),
               backend: 'postgresql',
-              backend_create_tables: true
+              backend_create_tables: true,
             }
           end
 
@@ -546,7 +546,7 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               recursor: true,
-              authoritative: false
+              authoritative: false,
             }
           end
 
@@ -567,7 +567,7 @@ describe 'powerdns', type: :class do
             {
               db_root_password: 'foobar',
               db_username: '',
-              db_password: 'bar'
+              db_password: 'bar',
             }
           end
 
@@ -578,13 +578,13 @@ describe 'powerdns', type: :class do
           let(:params) do
             {
               db_root_password: 'foobar',
-              db_username: 'foo'
+              db_username: 'foo',
             }
           end
 
           it {
             is_expected.to raise_error(
-              %r{'db_password' must be a non-empty string when 'authoritative' == true}
+              %r{'db_password' must be a non-empty string when 'authoritative' == true},
             )
           }
         end
@@ -595,7 +595,7 @@ describe 'powerdns', type: :class do
               db_root_password: 'foobar',
               db_username: 'foo',
               db_password: 'bar',
-              backend: 'awesomedb'
+              backend: 'awesomedb',
             }
           end
 
@@ -609,20 +609,20 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               authoritative_version: '4.7',
-              recursor_version: '4.7'
+              recursor_version: '4.7',
             }
           end
 
           case facts[:os]['family']
           when 'RedHat'
             it {
-              is_expected.to contain_yumrepo('powerdns').
-                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-47')
+              is_expected.to contain_yumrepo('powerdns')
+                .with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-47')
             }
 
             it {
-              is_expected.to contain_yumrepo('powerdns-recursor').
-                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-47')
+              is_expected.to contain_yumrepo('powerdns-recursor')
+                .with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-47')
             }
           when 'Debian'
             it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-47}) }
@@ -639,8 +639,8 @@ describe 'powerdns', type: :class do
               authoritative: false,
               forward_zones: {
                 'example.com': '1.1.1.1',
-                '+.': '8.8.8.8'
-              }
+                '+.': '8.8.8.8',
+              },
             }
           end
 
@@ -658,13 +658,13 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").with_ensure('file') }
 
           it {
-            is_expected.to contain_powerdns__config('forward-zones-file').
-              with(value: "#{recursor_dir}/forward_zones.conf")
+            is_expected.to contain_powerdns__config('forward-zones-file')
+              .with(value: "#{recursor_dir}/forward_zones.conf")
           }
 
           it {
-            is_expected.to contain_file("#{recursor_dir}/forward_zones.conf").
-              with_content(%r{^example.com=1.1.1.1})
+            is_expected.to contain_file("#{recursor_dir}/forward_zones.conf")
+              .with_content(%r{^example.com=1.1.1.1})
           }
         end
       end

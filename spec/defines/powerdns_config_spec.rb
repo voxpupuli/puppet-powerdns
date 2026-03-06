@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 override_facts = {
-  root_home: '/root'
+  root_home: '/root',
 }
 
 require 'spec_helper'
@@ -39,7 +39,7 @@ describe 'powerdns::config' do
           let(:params) do
             {
               setting: 'foo',
-              value: 'bar'
+              value: 'bar',
             }
           end
 
@@ -57,7 +57,7 @@ describe 'powerdns::config' do
             {
               setting: 'foo',
               value: 'bar',
-              type: 'recursor'
+              type: 'recursor',
             }
           end
 
@@ -68,7 +68,7 @@ describe 'powerdns::config' do
           let(:params) do
             {
               setting: 'local-port',
-              value: 54
+              value: 54,
             }
           end
 
@@ -79,7 +79,7 @@ describe 'powerdns::config' do
         context 'powerdns::config with empty value for gmysql-dnssec' do
           let(:params) do
             {
-              setting: 'gmysql-dnssec'
+              setting: 'gmysql-dnssec',
             }
           end
 
@@ -89,7 +89,7 @@ describe 'powerdns::config' do
         context 'powerdns::config with empty value for only-notify' do
           let(:params) do
             {
-              setting: 'only-notify'
+              setting: 'only-notify',
             }
           end
 
@@ -99,7 +99,7 @@ describe 'powerdns::config' do
         context 'powerdns::config with empty value' do
           let(:params) do
             {
-              setting: 'empty'
+              setting: 'empty',
             }
           end
 
@@ -112,7 +112,7 @@ describe 'powerdns::config' do
           let(:params) do
             {
               ensure: 'absent',
-              setting: 'foo'
+              setting: 'foo',
             }
           end
 
@@ -125,13 +125,13 @@ describe 'powerdns::config' do
             {
               setting: 'foo',
               value: 'bar',
-              type: 'something'
+              type: 'something',
             }
           end
 
           it {
             is_expected.to raise_error(
-              %r{expects a match for Enum\['authoritative', 'recursor'\], got}
+              %r{expects a match for Enum\['authoritative', 'recursor'\], got},
             )
           }
         end
@@ -141,7 +141,7 @@ describe 'powerdns::config' do
             {
               setting: 'webserver',
               value: true,
-              type: 'recursor'
+              type: 'recursor',
             }
           end
 
@@ -155,7 +155,7 @@ describe 'powerdns::config' do
             {
               setting: 'webserver-password',
               value: sensitive('S3cr3t'),
-              type: 'recursor'
+              type: 'recursor',
             }
           end
 
