@@ -4,7 +4,7 @@
 #
 require 'tempfile'
 Puppet::Type.type(:powerdns_zone_private).provide(
-  :pdnsutil
+  :pdnsutil,
 ) do
   desc "A provider for the resource type `powerdns_zone`,
         which manages a zone on powerdns
