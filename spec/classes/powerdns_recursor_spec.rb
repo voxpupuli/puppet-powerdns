@@ -20,12 +20,14 @@ describe 'powerdns::recursor' do
           facts
         end
 
-        recursor_dir = case facts[:os]['family']
-                       when 'RedHat'
-                         '/etc/pdns-recursor'
-                       else
-                         '/etc/powerdns'
-                       end
+        let(:recursor_dir) do
+          case facts[:os]['family']
+          when 'RedHat'
+            '/etc/pdns-recursor'
+          else
+            '/etc/powerdns'
+          end
+        end
 
         it { is_expected.to compile.with_all_deps }
 

@@ -22,24 +22,36 @@ describe 'powerdns::config', type: :define do
       end
       let(:title) { 'foo' }
 
-      case facts[:os]['family']
-      when 'RedHat'
-        authoritative_config = '/etc/pdns/pdns.conf'
-        recursor_dir = '/etc/pdns-recursor'
-      else
-        authoritative_config = '/etc/powerdns/pdns.conf'
-        recursor_dir = '/etc/powerdns'
+      let(:config_paths) do
+        recursor_dir = case facts[:os]['family']
+                       when 'RedHat'
+                         '/etc/pdns-recursor'
+                       else
+                         '/etc/powerdns'
+                       end
+
+        authoritative_config = case facts[:os]['family']
+                               when 'RedHat'
+                                 '/etc/pdns/pdns.conf'
+                               else
+                                 '/etc/powerdns/pdns.conf'
+                               end
+
+        {
+          authoritative_config: authoritative_config,
+          recursor_dir: recursor_dir,
+          recursor_config: "#{recursor_dir}/recursor.conf",
+        }
       end
-      recursor_config = "#{recursor_dir}/recursor.conf"
 
       context 'recursor type uses YAML file (with include_dir stanza)' do
         let(:params) { { setting: 'foo', value: 'bar', type: 'recursor' } }
 
-        it { is_expected.to contain_file(recursor_config).with_ensure('file') }
+        it { is_expected.to contain_file(config_paths[:recursor_config]).with_ensure('file') }
 
         it 'includes the include_dir stanza in the YAML content' do
-          is_expected.to contain_file(recursor_config)
-            .with_content(%r{include_dir:\s*"?#{Regexp.escape(recursor_dir)}/recursor\.d"?})
+          is_expected.to contain_file(config_paths[:recursor_config])
+            .with_content(%r{include_dir:\s*"?#{Regexp.escape(config_paths[:recursor_dir])}/recursor\.d"?})
         end
       end
 
@@ -47,8 +59,8 @@ describe 'powerdns::config', type: :define do
         let(:params) { { setting: 'foo', value: 'bar' } }
 
         it do
-          is_expected.to contain_file_line("powerdns-config-foo-#{authoritative_config}")
-            .with_path(authoritative_config)
+          is_expected.to contain_file_line("powerdns-config-foo-#{config_paths[:authoritative_config]}")
+            .with_path(config_paths[:authoritative_config])
         end
       end
     end
