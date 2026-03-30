@@ -132,7 +132,7 @@ class powerdns (
   String[1] $authoritative_service_name,
   Stdlib::Absolutepath $authoritative_configdir,
   Stdlib::Absolutepath $authoritative_config,
-  Pattern[/4\.[0-9]+/] $authoritative_version,
+  Pattern[/[4,5]\.[0-9]+/] $authoritative_version,
   Stdlib::Absolutepath $db_file,
   Stdlib::Absolutepath $mysql_schema_file,
   Stdlib::Absolutepath $pgsql_schema_file,
@@ -157,6 +157,9 @@ class powerdns (
   Optional[String[1]] $mysql_collate = undef,
   Boolean $authoritative = true,
   Boolean $recursor = false,
+  Boolean $recursor_use_yaml = false,
+  Optional[Stdlib::Absolutepath] $recursor_local_config_file = undef,
+  Optional[Hash] $recursor_local_config = undef,
   Powerdns::Backends $backend = 'mysql',
   Boolean $backend_install = true,
   Boolean $backend_create_tables = true,
@@ -178,7 +181,7 @@ class powerdns (
   Powerdns::LmdbSyncMode $lmdb_sync_mode = undef,
   Boolean $custom_repo = false,
   Boolean $custom_epel = false,
-  Hash $forward_zones = {},
+  Optional[Variant[Hash,Tuple]] $forward_zones = undef,
   Powerdns::Autoprimaries $autoprimaries = {},
   Boolean $purge_autoprimaries = false,
   String[1] $authoritative_user = 'pdns',
@@ -223,10 +226,12 @@ class powerdns (
   if $recursor {
     contain powerdns::recursor
 
-    # Set up Hiera for the recursor.
-    $powerdns_recursor_config = lookup('powerdns::recursor::config', Hash, 'deep', {})
-    $powerdns_recursor_defaults = { 'type' => 'recursor' }
-    create_resources(powerdns::config, $powerdns_recursor_config, $powerdns_recursor_defaults)
+    # old config format
+    unless $recursor_use_yaml {
+      $powerdns_recursor_config = lookup('powerdns::recursor::config', Hash, 'deep', {})
+      $powerdns_recursor_defaults = { 'type' => 'recursor' }
+      create_resources(powerdns::config, $powerdns_recursor_config, $powerdns_recursor_defaults)
+    }
   }
 
   if $purge_autoprimaries {
