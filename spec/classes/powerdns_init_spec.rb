@@ -632,6 +632,36 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_package(authoritative_package_name).with('ensure' => 'installed') }
         end
 
+        context 'powerdns version 5' do
+          let(:params) do
+            {
+              db_root_password: 'foobar',
+              db_username: 'foo',
+              db_password: 'bar',
+              authoritative_version: '5.0',
+              recursor_version: '5.3'
+            }
+          end
+
+          case facts[:os]['family']
+          when 'RedHat'
+            it {
+              is_expected.to contain_yumrepo('powerdns').
+                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-50')
+            }
+
+            it {
+              is_expected.to contain_yumrepo('powerdns-recursor').
+                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-53')
+            }
+          when 'Debian'
+            it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-50}) }
+            it { is_expected.to contain_apt__source('powerdns-recursor').with_release(%r{rec-53}) }
+          end
+
+          it { is_expected.to contain_package(authoritative_package_name).with('ensure' => 'installed') }
+        end
+
         context 'powerdns class with the recursor with forward zones' do
           let(:params) do
             {
