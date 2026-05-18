@@ -639,20 +639,20 @@ describe 'powerdns', type: :class do
               db_username: 'foo',
               db_password: 'bar',
               authoritative_version: '5.0',
-              recursor_version: '5.3'
+              recursor_version: '5.3',
             }
           end
 
           case facts[:os]['family']
           when 'RedHat'
             it {
-              is_expected.to contain_yumrepo('powerdns').
-                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-50')
+              is_expected.to contain_yumrepo('powerdns')
+                .with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/auth-50')
             }
 
             it {
-              is_expected.to contain_yumrepo('powerdns-recursor').
-                with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-53')
+              is_expected.to contain_yumrepo('powerdns-recursor')
+                .with('baseurl' => 'http://repo.powerdns.com/centos/$basearch/$releasever/rec-53')
             }
           when 'Debian'
             it { is_expected.to contain_apt__source('powerdns').with_release(%r{auth-50}) }
