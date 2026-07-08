@@ -1,6 +1,6 @@
 {
   "name": "voxpupuli-powerdns",
-  "version": "6.0.1-rc0",
+  "version": "6.1.0",
   "author": "voxpupuli",
   "summary": "A module to install and configure PowerDNS 4.x authoritative server and recursor",
   "license": "Apache-2.0",
