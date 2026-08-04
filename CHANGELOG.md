@@ -4,7 +4,31 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v6.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v6.0.0) (2025-08-04)
+## [v6.1.0](https://github.com/voxpupuli/puppet-powerdns/tree/v6.1.0) (2026-07-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v6.0.0...v6.1.0)
+
+**Implemented enhancements:**
+
+- Allow puppetlabs/apt 11.x [\#233](https://github.com/voxpupuli/puppet-powerdns/pull/233) ([deric](https://github.com/deric))
+
+**Fixed bugs:**
+
+- fix error messages in types stating wrong field name [\#238](https://github.com/voxpupuli/puppet-powerdns/pull/238) ([trefzer](https://github.com/trefzer))
+- set proper permissions on config files, fixes \#221 [\#223](https://github.com/voxpupuli/puppet-powerdns/pull/223) ([saz](https://github.com/saz))
+
+**Closed issues:**
+
+- support for powerdns auth versions 5.x [\#230](https://github.com/voxpupuli/puppet-powerdns/issues/230)
+- Wrong permissions of recursor.conf prevents start [\#221](https://github.com/voxpupuli/puppet-powerdns/issues/221)
+
+**Merged pull requests:**
+
+- Support authoritative 5.x version \(\#230\) [\#232](https://github.com/voxpupuli/puppet-powerdns/pull/232) ([deric](https://github.com/deric))
+- Switch to modern apt keyrings [\#231](https://github.com/voxpupuli/puppet-powerdns/pull/231) ([deric](https://github.com/deric))
+- fix: update from org sensson to voxpupuli [\#222](https://github.com/voxpupuli/puppet-powerdns/pull/222) ([TheMeier](https://github.com/TheMeier))
+
+## [v6.0.0](https://github.com/voxpupuli/puppet-powerdns/tree/v6.0.0) (2025-08-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-powerdns/compare/v5.2.1...v6.0.0)
 
