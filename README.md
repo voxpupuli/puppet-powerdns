@@ -43,6 +43,29 @@ class { 'powerdns':
   recursor         => true,
 }
 ```
+### YAML config format
+
+Starting from Recursor `5.0` YAML syntax is supported. From release `5.2` `recursor.conf` file is parsed as YAML, unless `--enable-old-settings` flag is provided. The old configuration can be converted:
+
+```
+$ rec_control show-yaml path/to/recursor.conf
+```
+
+For detailed changes in syntax see [the official documentation](https://doc.powerdns.com/recursor/appendices/yamlconversion.html).
+```yaml
+powerdns::recursor_version: '5.3'
+powerdns::recursor_use_yaml: true
+powerdns::recursor::config:
+  dnssec:
+    validation: 'off'
+  incoming:
+    allow_from:
+      - 0.0.0.0/0
+    distributor_threads: 1
+    listen:
+      - 0.0.0.0:53
+```
+
 
 ### Recursor forward zones
 
