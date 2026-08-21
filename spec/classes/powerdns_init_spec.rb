@@ -486,6 +486,103 @@ describe 'powerdns', type: :class do
           end
         end
 
+        context 'powerdns class with remote backend' do
+          let(:params) do
+            {
+              backend: 'remote',
+              backend_install: false,
+              backend_create_tables: false,
+            }
+          end
+
+          it { is_expected.to contain_class('powerdns::backends::remote') }
+          it { is_expected.to contain_powerdns__config('launch').with('value' => 'remote') }
+
+          case facts[:os]['family']
+          when 'Debian'
+            it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
+            it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') }
+          when 'RedHat'
+            it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') }
+          end
+
+          context 'with backend_install set to true' do
+            let(:params) do
+              {
+                backend: 'remote',
+                backend_install: true,
+              }
+            end
+
+            it 'fails with backend_install' do
+              is_expected.to raise_error(%r{backend_install is not supported with remote})
+            end
+          end
+
+          context 'with backend_create_tables set to true' do
+            let(:params) do
+              {
+                backend: 'remote',
+                backend_install: false,
+                backend_create_tables: true,
+              }
+            end
+
+            it 'fails with backend_create_tables' do
+              is_expected.to raise_error(%r{backend_create_tables is not supported with remote})
+            end
+          end
+        end
+
+        context 'powerdns class with pipe backend' do
+          let(:params) do
+            {
+              backend: 'pipe',
+              backend_install: false,
+              backend_create_tables: false,
+            }
+          end
+
+          it { is_expected.to contain_class('powerdns::backends::pipe') }
+          it { is_expected.to contain_powerdns__config('launch').with('value' => 'pipe') }
+
+          case facts[:os]['family']
+          when 'Debian'
+            it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
+            it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') }
+            it { is_expected.to contain_file('/etc/powerdns/pdns.d/pdns.simplebind.conf').with('ensure' => 'absent') }
+          when 'RedHat'
+            it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') }
+          end
+
+          context 'with backend_install set to true' do
+            let(:params) do
+              {
+                backend: 'pipe',
+                backend_install: true,
+              }
+            end
+
+            it 'fails with backend_install' do
+              is_expected.to raise_error(%r{backend_install is not supported with pipe})
+            end
+          end
+
+          context 'with backend_create_tables set to true' do
+            let(:params) do
+              {
+                backend: 'pipe',
+                backend_install: false,
+                backend_create_tables: true,
+              }
+            end
+
+            it 'fails with backend_create_tables' do
+              is_expected.to raise_error(%r{backend_create_tables is not supported with pipe})
+            end
+          end
+        end
+
         context 'powerdns class with backend_create_tables set to false' do
           let(:params) do
             {

@@ -6,4 +6,6 @@ type Powerdns::Backends = Enum[
   'postgresql',
   'sqlite',
   'lmdb',
+  'remote',
+  'pipe',
 ]
