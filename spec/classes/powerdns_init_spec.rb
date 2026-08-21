@@ -498,13 +498,8 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_class('powerdns::backends::remote') }
           it { is_expected.to contain_powerdns__config('launch').with('value' => 'remote') }
 
-          if facts[:os]['family'] == 'Debian'
-            it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
-          end
-
-          if ['Debian', 'RedHat'].include?(facts[:os]['family'])
-            it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') }
-          end
+          it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') } if facts[:os]['family'] == 'Debian'
+          it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') } if %w[Debian RedHat].include?(facts[:os]['family'])
 
           context 'with backend_install set to true' do
             let(:params) do
@@ -546,14 +541,9 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_class('powerdns::backends::pipe') }
           it { is_expected.to contain_powerdns__config('launch').with('value' => 'pipe') }
 
-          if facts[:os]['family'] == 'Debian'
-            it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
-            it { is_expected.to contain_file('/etc/powerdns/pdns.d/pdns.simplebind.conf').with('ensure' => 'absent') }
-          end
-
-          if ['Debian', 'RedHat'].include?(facts[:os]['family'])
-            it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') }
-          end
+          it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') } if facts[:os]['family'] == 'Debian'
+          it { is_expected.to contain_file('/etc/powerdns/pdns.d/pdns.simplebind.conf').with('ensure' => 'absent') } if facts[:os]['family'] == 'Debian'
+          it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') } if %w[Debian RedHat].include?(facts[:os]['family'])
 
           context 'with backend_install set to true' do
             let(:params) do
