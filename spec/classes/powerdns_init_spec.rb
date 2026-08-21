@@ -498,11 +498,11 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_class('powerdns::backends::remote') }
           it { is_expected.to contain_powerdns__config('launch').with('value' => 'remote') }
 
-          case facts[:os]['family']
-          when 'Debian'
+          if facts[:os]['family'] == 'Debian'
             it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
-            it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') }
-          when 'RedHat'
+          end
+
+          if ['Debian', 'RedHat'].include?(facts[:os]['family'])
             it { is_expected.to contain_package('pdns-backend-remote').with('ensure' => 'installed') }
           end
 
@@ -546,12 +546,12 @@ describe 'powerdns', type: :class do
           it { is_expected.to contain_class('powerdns::backends::pipe') }
           it { is_expected.to contain_powerdns__config('launch').with('value' => 'pipe') }
 
-          case facts[:os]['family']
-          when 'Debian'
+          if facts[:os]['family'] == 'Debian'
             it { is_expected.to contain_package('pdns-backend-bind').with('ensure' => 'purged') }
-            it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') }
             it { is_expected.to contain_file('/etc/powerdns/pdns.d/pdns.simplebind.conf').with('ensure' => 'absent') }
-          when 'RedHat'
+          end
+
+          if ['Debian', 'RedHat'].include?(facts[:os]['family'])
             it { is_expected.to contain_package('pdns-backend-pipe').with('ensure' => 'installed') }
           end
 
