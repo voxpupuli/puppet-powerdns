@@ -1,8 +1,4 @@
 # pipe backend for powerdns
-#
-# Installs the pipe backend package and sets `launch=pipe`.
-# Configure `pipe-command` (and related settings) with `powerdns::config`
-# resources in your profile or Hiera.
 class powerdns::backends::pipe inherits powerdns {
   if $facts['os']['family'] == 'Debian' {
     # The pdns-server package from the Debian APT repo automatically installs the bind
@@ -21,6 +17,7 @@ class powerdns::backends::pipe inherits powerdns {
     }
   }
 
+  # pipe-command (and related settings) are managed via powerdns::config.
   powerdns::config { 'launch':
     ensure  => present,
     setting => 'launch',
