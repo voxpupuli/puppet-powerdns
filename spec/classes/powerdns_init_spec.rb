@@ -290,7 +290,7 @@ describe 'powerdns', type: :class do
               'ensure' => 'file',
               'owner' => 'root',
               'group' => 'pdns',
-              'mode' => '0644',
+              'mode' => '0664',
             )
           end
 
@@ -299,7 +299,7 @@ describe 'powerdns', type: :class do
               'ensure' => 'directory',
               'owner' => 'root',
               'group' => 'pdns',
-              'mode' => '0755',
+              'mode' => '0775',
             )
           end
 
