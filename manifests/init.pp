@@ -57,6 +57,10 @@
 #   Authoritative server sqlite backend package name
 # @param lmdb_backend_package_name
 #   Authoritative server lmdb backend package name
+# @param remote_backend_package_name
+#   Authoritative server remote backend package name
+# @param pipe_backend_package_name
+#   Authoritative server pipe backend package name
 # @param mysql_charset
 #   The charecter set for the MySQL database
 # @param mysql_collate
@@ -153,6 +157,8 @@ class powerdns (
   Optional[String[1]] $pgsql_backend_package_name = undef,
   Optional[String[1]] $sqlite_backend_package_name = undef,
   Optional[String[1]] $lmdb_backend_package_name = undef,
+  Optional[String[1]] $remote_backend_package_name = undef,
+  Optional[String[1]] $pipe_backend_package_name = undef,
   Optional[String[1]] $mysql_charset = undef,
   Optional[String[1]] $mysql_collate = undef,
   Boolean $authoritative = true,
@@ -188,7 +194,7 @@ class powerdns (
 ) {
   # Do some additional checks. In certain cases, some parameters are no longer optional.
   if $authoritative {
-    if $require_db_password and !($powerdns::backend in ['bind', 'ldap', 'sqlite', 'lmdb']) {
+    if $require_db_password and !($powerdns::backend in ['bind', 'ldap', 'sqlite', 'lmdb', 'remote', 'pipe']) {
       assert_type(Variant[String[1], Sensitive[String[1]]], $db_password) |$expected, $actual| {
         fail("'db_password' must be a non-empty string when 'authoritative' == true")
       }

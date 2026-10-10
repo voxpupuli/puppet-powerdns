@@ -8,6 +8,8 @@ powerdns::ldap_backend_package_name: pdns-backend-ldap
 powerdns::pgsql_backend_package_name: pdns-backend-pgsql
 powerdns::sqlite_backend_package_name: pdns-backend-sqlite3
 powerdns::lmdb_backend_package_name: pdns-backend-lmdb
+powerdns::remote_backend_package_name: pdns-backend-remote
+powerdns::pipe_backend_package_name: pdns-backend-pipe
 powerdns::sqlite_package_name: sqlite3
 powerdns::authoritative_package_name: pdns-server
 powerdns::authoritative_extra_packages:

@@ -12,7 +12,9 @@
 * [`powerdns::backends::ldap`](#powerdns--backends--ldap): ldap backend for powerdns
 * [`powerdns::backends::lmdb`](#powerdns--backends--lmdb): lmdb backend for powerdns
 * [`powerdns::backends::mysql`](#powerdns--backends--mysql): mysql backend for powerdns
+* [`powerdns::backends::pipe`](#powerdns--backends--pipe): pipe backend for powerdns
 * [`powerdns::backends::postgresql`](#powerdns--backends--postgresql): postgresql backend for powerdns
+* [`powerdns::backends::remote`](#powerdns--backends--remote): remote backend for powerdns
 * [`powerdns::backends::sqlite`](#powerdns--backends--sqlite): sqlite backend for powerdns
 * [`powerdns::recursor`](#powerdns--recursor): powerdns recursor
 * [`powerdns::repo`](#powerdns--repo): powerdns::repo
@@ -75,6 +77,8 @@ The following parameters are available in the `powerdns` class:
 * [`pgsql_backend_package_name`](#-powerdns--pgsql_backend_package_name)
 * [`sqlite_backend_package_name`](#-powerdns--sqlite_backend_package_name)
 * [`lmdb_backend_package_name`](#-powerdns--lmdb_backend_package_name)
+* [`remote_backend_package_name`](#-powerdns--remote_backend_package_name)
+* [`pipe_backend_package_name`](#-powerdns--pipe_backend_package_name)
 * [`mysql_charset`](#-powerdns--mysql_charset)
 * [`mysql_collate`](#-powerdns--mysql_collate)
 * [`authoritative`](#-powerdns--authoritative)
@@ -302,6 +306,22 @@ Default value: `undef`
 Data type: `Optional[String[1]]`
 
 Authoritative server lmdb backend package name
+
+Default value: `undef`
+
+##### <a name="-powerdns--remote_backend_package_name"></a>`remote_backend_package_name`
+
+Data type: `Optional[String[1]]`
+
+Authoritative server remote backend package name
+
+Default value: `undef`
+
+##### <a name="-powerdns--pipe_backend_package_name"></a>`pipe_backend_package_name`
+
+Data type: `Optional[String[1]]`
+
+Authoritative server pipe backend package name
 
 Default value: `undef`
 
@@ -583,9 +603,17 @@ lmdb backend for powerdns
 
 mysql backend for powerdns
 
+### <a name="powerdns--backends--pipe"></a>`powerdns::backends::pipe`
+
+pipe backend for powerdns
+
 ### <a name="powerdns--backends--postgresql"></a>`powerdns::backends::postgresql`
 
 postgresql backend for powerdns
+
+### <a name="powerdns--backends--remote"></a>`powerdns::backends::remote`
+
+remote backend for powerdns
 
 ### <a name="powerdns--backends--sqlite"></a>`powerdns::backends::sqlite`
 
@@ -962,7 +990,7 @@ Hash[Pattern[/.+@.+/], Struct[{
 
 Type Alias for Powerdns::Backends
 
-Alias of `Enum['ldap', 'mysql', 'bind', 'postgresql', 'sqlite', 'lmdb']`
+Alias of `Enum['ldap', 'mysql', 'bind', 'postgresql', 'sqlite', 'lmdb', 'remote', 'pipe']`
 
 ### <a name="Powerdns--ConfigValue"></a>`Powerdns::ConfigValue`
 

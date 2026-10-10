@@ -65,7 +65,7 @@ powerdns::forward_zones:
 ### Backends
 
 The default backend is MySQL. It also comes with support for PostgreSQL, Bind,
-LDAP, SQLite and lmdb.
+LDAP, SQLite, lmdb, remote and pipe.
 
 If you don't specify the backend it assumes you will use MySQL.
 
@@ -125,6 +125,42 @@ class { 'powerdns':
   backend               => 'lmdb',
   backend_install       => false,
   backend_create_tables => false,
+}
+```
+
+To use the remote backend you must set `backend_install` and
+`backend_create_tables` to false. Set connection details with
+`powerdns::config`, for example:
+
+```puppet
+class { 'powerdns':
+  backend               => 'remote',
+  backend_install       => false,
+  backend_create_tables => false,
+}
+
+powerdns::config { 'remote-connection-string':
+  type    => 'authoritative',
+  setting => 'remote-connection-string',
+  value   => 'http:url=http://127.0.0.1:8080/dns,post,post_json',
+}
+```
+
+To use the pipe backend you must set `backend_install` and
+`backend_create_tables` to false. Set `pipe-command` with
+`powerdns::config`, for example:
+
+```puppet
+class { 'powerdns':
+  backend               => 'pipe',
+  backend_install       => false,
+  backend_create_tables => false,
+}
+
+powerdns::config { 'pipe-command':
+  type    => 'authoritative',
+  setting => 'pipe-command',
+  value   => '/usr/local/bin/backend.py',
 }
 ```
 

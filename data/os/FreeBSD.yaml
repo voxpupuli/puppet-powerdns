@@ -8,6 +8,8 @@ powerdns::ldap_backend_package_name: nil
 powerdns::pgsql_backend_package_name: nil
 powerdns::sqlite_backend_package_name: nil
 powerdns::lmdb_backend_package_name: nil
+powerdns::remote_backend_package_name: nil
+powerdns::pipe_backend_package_name: nil
 powerdns::sqlite_package_name: sqlite3
 powerdns::authoritative_package_name: powerdns
 powerdns::authoritative_extra_packages: []
