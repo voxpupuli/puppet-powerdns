@@ -34,14 +34,14 @@ class powerdns::backends::sqlite (
   if $powerdns::backend_create_tables {
     file { dirname($powerdns::db_file):
       ensure  => directory,
-      mode    => '0755',
+      mode    => '0775',
       owner   => $powerdns::authoritative_file_owner,
       group   => $powerdns::authoritative_file_group,
       require => Package[$powerdns::authoritative_package_name],
     }
     -> file { $powerdns::db_file:
       ensure => file,
-      mode   => '0644',
+      mode   => '0664',
       owner  => $powerdns::authoritative_file_owner,
       group  => $powerdns::authoritative_file_group,
     }
