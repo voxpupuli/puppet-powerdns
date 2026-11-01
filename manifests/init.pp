@@ -216,8 +216,11 @@ class powerdns (
     # Set up Hiera. Even though it's not necessary to explicitly set $type for the authoritative
     # config, it is added for clarity.
     $powerdns_auth_config = lookup('powerdns::auth::config', Hash, 'deep', {})
-    $powerdns_auth_defaults = { 'type' => 'authoritative' }
-    create_resources(powerdns::config, $powerdns_auth_config, $powerdns_auth_defaults)
+    $powerdns_auth_config.each |$conf_title, $data| {
+      powerdns::config { $conf_title:
+        * => $data + { 'type' => 'authoritative' },
+      }
+    }
   }
 
   if $recursor {
@@ -225,8 +228,11 @@ class powerdns (
 
     # Set up Hiera for the recursor.
     $powerdns_recursor_config = lookup('powerdns::recursor::config', Hash, 'deep', {})
-    $powerdns_recursor_defaults = { 'type' => 'recursor' }
-    create_resources(powerdns::config, $powerdns_recursor_config, $powerdns_recursor_defaults)
+    $powerdns_recursor_config.each| $conf_title, $data| {
+      powerdns::config { $conf_title:
+        * => $data + { 'type' => 'recursor' },
+      }
+    }
   }
 
   if $purge_autoprimaries {
@@ -234,5 +240,9 @@ class powerdns (
       purge => true,
     }
   }
-  create_resources('powerdns_autoprimary', $autoprimaries)
+  $autoprimaries.each |$primary, $data| {
+    powerdns_autoprimary { $primary:
+      * => $data,
+    }
+  }
 }
